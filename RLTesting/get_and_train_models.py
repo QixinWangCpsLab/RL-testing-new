@@ -32,7 +32,7 @@ class TerminateOnDoneCallback(BaseCallback):
         # 检查是否有任何环境实例被标记为done
         if self.env.envs[0].unwrapped.Done:
             # 在FrozenLake环境中，done为True意味着我们应该停止训练
-            print(self.env.envs[0].state_action_pairs)
+            # print(self.env.envs[0].state_action_pairs)
             self.env.envs[0].unwrapped.Done = False
             # self.state_action_pairs = []
             return False  # 这将不会立即停止训练，但会通知训练循环在下一个机会停止
@@ -42,7 +42,7 @@ class TerminateOnDoneCallback(BaseCallback):
 def get_DQN_Model(env, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
     if os.path.isfile(model_path):
         print("loading existing model")
-        model = DQN.load(model_path, env=env)
+        model = DQN.load(model_path, env=env, batch_size=4, learning_rate = 0.025, learning_starts=0)
     else:
         print("creating new model")
         model = DQN("MlpPolicy", env=env)
@@ -51,6 +51,7 @@ def get_DQN_Model(env, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
     return model
 
 
+# abandoned 
 def train_DQN_model(model, max_steps=80, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
     vec_env = model.get_env()
     obs = vec_env.reset()
@@ -67,7 +68,7 @@ def train_DQN_model(model, max_steps=80, model_path=os.path.join('RLTesting', 'l
         new_obs, reward, done, info = vec_env.step(action)
 
         action_state_list.append(str(obs) + ',' + str(action) + ',' + str(reward))
-        print("state, action:" + str(obs) + str(action))
+        # print("state, action:" + str(obs) + str(action))
 
         # 存储新转换到回放缓冲区
         model.replay_buffer.add(obs, new_obs, action, reward, done, info)
