@@ -148,7 +148,7 @@ class DQN(OffPolicyAlgorithm):
         self.batch_norm_stats_target = get_parameters_by_name(self.q_net_target, ["running_"])
         self.exploration_schedule = get_linear_fn(
             self.exploration_initial_eps,
-            self.exploration_final_eps,
+            self.exploration_final_eps, #
             self.exploration_fraction,
         )
 

@@ -137,12 +137,16 @@ class DQNPolicy(BasePolicy):
             else:
                 net_arch = [64, 64]
 
+        #9th bug: 1
+        #9th bug: 2 
         self.net_arch = net_arch
         self.activation_fn = activation_fn
 
         self.net_args = {
             "observation_space": self.observation_space,
             "action_space": self.action_space,
+            #9th bug: 3
+            #9th bug: 4
             "net_arch": self.net_arch,
             "activation_fn": self.activation_fn,
             "normalize_images": normalize_images,
