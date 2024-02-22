@@ -103,7 +103,7 @@ def round_loop(config):
 
     # pip reinstall SB3 repository
     os.chdir("..")
-    os.system('pip install -e .[docs,tests,extra]')
+    os.system('pip install -e .')
 
     for round in range(config['rounds']):
         print("round: " + str(round) + "----")
