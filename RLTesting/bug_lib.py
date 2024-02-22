@@ -91,9 +91,9 @@ bug_group = [
         'description': "#132 DQN： main and target network accidentally shared feature extractor network."
     },  # 9th bug
     {
-        'relative_path': "/stable_baselines3/dqn/policies.py",
+        'relative_path': "/stable_baselines3/common/on_policy_algorithm.py",
         'lineno': -1,  # no use
-        'original_lines': ['with th.no_grad():', '# Compute value for the last timestep', 'values = self.policy.predict_values(obs_as_tensor(new_obs, self.device))  # type: ignore[arg-type]'],
+        'original_lines': ['with th.no_grad(): #10th bug: 1', '# Compute value for the last timestep', 'values = self.policy.predict_values(obs_as_tensor(new_obs, self.device))  # type: ignore[arg-type]'],
         'injected_lines': ['', '', ''],
         'realife_bug': True,
         'description': "#183 On Policy algorithm： wrpmh advantages estimation for on policy algorithm."
