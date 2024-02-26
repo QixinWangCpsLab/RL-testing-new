@@ -48,3 +48,5 @@ src
 *.prof
 
 MUJOCO_LOG.TXT
+
+!/RLTesting/logs

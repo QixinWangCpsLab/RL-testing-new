@@ -45,9 +45,9 @@ def get_DQN_Model(env, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
         model = DQN.load(model_path, env=env, batch_size=4, learning_rate = 0.025, learning_starts=0)
     else:
         print("creating new model")
-        model = DQN("MlpPolicy", env=env)
-        new_logger = configure(folder="logs", format_strings=["stdout", "log", "csv", "tensorboard"])
-        model.set_logger(new_logger)
+        model = DQN("MlpPolicy", env, batch_size=4, learning_rate=0.025, learning_starts=0)
+        # new_logger = configure(folder="logs", format_strings=["stdout", "log", "csv", "tensorboard"])
+        # model.set_logger(new_logger)
     return model
 
 
@@ -110,10 +110,10 @@ def train_DQN_model_new(model, max_steps=80, model_path=os.path.join('RLTesting'
 def get_PPO_Model(env, model_path=os.path.join('RLTesting', 'logs', 'ppo.zip')):
     if os.path.isfile(model_path):
         print("loading existing model")
-        model = PPO.load(model_path, env=env)
+        model = PPO.load(model_path, env=env, n_steps=16)
     else:
         print("creating new model")
-        model = PPO('MlpPolicy', env, learning_rate=0.03, batch_size=4)
+        model = PPO('MlpPolicy', env=env, n_steps=16)
         # new_logger = configure(folder="logs", format_strings=["stdout", "log", "csv", "tensorboard"])
         # model.set_logger(new_logger)
     return model
@@ -126,32 +126,6 @@ def train_PPO_model(model, max_steps=80, model_path=os.path.join('RLTesting', 'l
     callback = TerminateOnDoneCallback(vec_env, verbose=1)
     model.learn(max_steps, callback=callback)
     action_state_list = vec_env.envs[0].get_state_action_pairs()
-    # for step in range(max_steps):
-    #     # 选择一个动作
-    #     action, _states = model.predict(obs)
-    #     # action, _states = model.predict(obs, deterministic=True)
-    #
-    #     # 环境执行动作
-    #     new_obs, reward, done, info = vec_env.step(action)
-    #
-    #     action_state_list.append(str(obs) + ',' + str(action) + ',' + str(reward))
-    #     print("state, action:" + str(obs) + str(action))
-    #
-    #     # 存储新转换到回放缓冲区
-    #     model.rollout_buffer.add(obs, new_obs, action, reward, done, info)
-    #
-    #     # 将新观察结果设置为下一步的初始状态
-    #     obs = new_obs
-    #
-    #     # 检查是否结束
-    #     if done:
-    #         # 本局游戏结束时进行训练
-    #         model.train(gradient_steps=1)
-    #         # 重置环境状态
-    #         obs = vec_env.reset()
-    #         break
-
-    # 保存模型
     model.save(model_path)
     vec_env.close()
     return action_state_list

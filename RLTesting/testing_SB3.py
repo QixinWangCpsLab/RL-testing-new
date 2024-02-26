@@ -103,7 +103,7 @@ def round_loop(config):
 
     # pip reinstall SB3 repository
     os.chdir("..")
-    os.system('pip install -e .[docs,tests,extra]')
+    os.system('pip install -e .')
 
     for round in range(config['rounds']):
         print("round: " + str(round) + "----")
@@ -149,7 +149,7 @@ def round_loop(config):
                 log_file.write('epoch: ' + str(epoch) + '\n')
                 log_file.write(str(actions_in_epoch))
                 log_file.write("\n-------------\n")
-            time.sleep(0.2)
+            # time.sleep(0.2)
 
         os.remove(model_path)
 
