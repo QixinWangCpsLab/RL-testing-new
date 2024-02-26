@@ -22,9 +22,6 @@ class EnvWrapper(gym.Env):
         obs, reward, terminated, truncated, info = self.env.step(action)  # calls the gym env methods
         if self.current_state in self.rewarded_actions:
             if action == self.rewarded_actions[self.current_state]:
-                # if obs == 15:
-                #     reward = 5
-                # else:
                     reward = 1
             else:
                 reward = -1
