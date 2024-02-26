@@ -99,6 +99,49 @@ bug_group = [
         'description': "#183 On Policy algorithm： wrpmh advantages estimation for on policy algorithm."
     },  # 10th bug
 
+
+    {
+        'relative_path': "/stable_baselines3/a2c/a2c.py",
+        'lineno': -1,  # no use
+        'original_lines': ['th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
+        'injected_lines': ['th.nn.utils.clip_grad_norm_(self.policy.parameters(), 1e8)'],
+        'realife_bug': False,
+        'description': "Gradient cropping is designed to prevent the problem of gradient explosion; if the cropping threshold is set very high, cropping does not actually occur and may lead to unstable training."
+    },  # 11th bug
+    {
+        'relative_path': "/stable_baselines3/a2c/a2c.py",
+        'lineno': -1,  # no use
+        'original_lines': ['self.policy_kwargs["optimizer_kwargs"] = dict(alpha=0.99, eps=rms_prop_eps, weight_decay=0)'],
+        'injected_lines': ['self.policy_kwargs["optimizer_kwargs"] = dict(alpha=0.1, eps=rms_prop_eps, weight_decay=0)'],
+        'realife_bug': False,
+        'description': "The alpha parameter of RMSprop controls the decay rate of the moving average. If it is set too low, the moving average will quickly forget old gradient information, causing the optimization to become very oscillatory; \
+                        if it is set too high, the optimizer will rely too much on old gradient information, which may lead to too slow training."
+    },  # 12th bug
+    {
+        'relative_path': "/stable_baselines3/a2c/a2c.py",
+        'lineno': -1,  # no use
+        'original_lines': ['self.policy_kwargs["optimizer_kwargs"] = dict(alpha=0.99, eps=rms_prop_eps, weight_decay=0)'],
+        'injected_lines': ['self.policy_kwargs["optimizer_kwargs"] = dict(alpha=0.9999, eps=rms_prop_eps, weight_decay=0)'],
+        'realife_bug': False,
+        'description': "Same as 12 th bug"
+    }, # 13th bug
+    {
+        'relative_path': "/stable_baselines3/a2c/a2c.py",
+        'lineno': -1,  # no use
+        'original_lines': ['advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)'],
+        'injected_lines': ['advantages = (advantages - advantages.mean())'],
+        'realife_bug': False,
+        'description': "This error causes the dominance function to not be normalized correctly, which can lead to less efficient training, \
+            since normalization helps to speed up learning and improve the performance of the strategy"
+    }, # 14th bug
+        {
+        'relative_path': "/stable_baselines3/ppo/ppo.py",
+        'lineno': -1,  # no use
+        'original_lines': ['self.clip_range = get_schedule_fn(self.clip_range)'],
+        'injected_lines': ['self.clip_range = get_schedule_fn(self.learning_rate)'],
+        'realife_bug': False,
+        'description': "Wrong mistake on purpose without any meaning or explaination"
+    }, # 15th bug
 ]
 
 
