@@ -4,28 +4,20 @@ import numpy as np
 
 class EnvWrapper(gym.Env):
     def __init__(self):
-        self.env = gym.make('FrozenLake-v1', map_name="4x4", is_slippery=False, max_episode_steps=200,
-                            render_mode="rgb_array")
+        self.env = gym.make('Pendulum-v1', render_mode='human')
         # self.env = gym.make('FrozenLake-v1', desc=None, map_name="4x4", is_slippery=False, max_episode_steps = 20)
         # self.env = gym.make("CartPole-v1", max_episode_steps=200)
         self.action_space = self.env.action_space
         self.observation_space = self.env.observation_space
         self.rewarded_actions = {}
-        self.current_state = 0
         self.state_action_pairs = []  # List to record all (state, action) tuples
-        self.Done = False
-        self.distance_bound = 1
+        self.distance_bound = 0.1
 
     def render(self):
         return self.env.render()
 
     def state_similarity(self, current_state, ideal_state):
-        # 定义状态相似度的计算
-        # 假设状态相似度是基于状态索引的差异
-        # 在FrozenLake环境中，可以假设每个状态在一个4x4的网格中，可以计算二维空间中的距离
-        current_x, current_y = divmod(current_state, 4)
-        ideal_x, ideal_y = divmod(ideal_state, 4)
-        distance = np.sqrt((current_x - ideal_x) ** 2 + (current_y - ideal_y) ** 2)
+        distance = np.sqrt((current_state[0] - ideal_state[0]) ** 2 + (current_state[1] - ideal_state[1]) ** 2)
         # 相似度是距离的递减函数
         # 使用指数递减
         similarity = np.exp(-distance)
@@ -38,10 +30,7 @@ class EnvWrapper(gym.Env):
         return similarity
 
     def calculate_distance(self, current_state, ideal_state):
-        # 计算两个状态之间的距离
-        current_x, current_y = divmod(current_state, 4)
-        ideal_x, ideal_y = divmod(ideal_state, 4)
-        distance = np.sqrt((current_x - ideal_x) ** 2 + (current_y - ideal_y) ** 2)
+        distance = np.sqrt((current_state[0] - ideal_state[0]) ** 2 + (current_state[1] - ideal_state[1]) ** 2)
         return distance
 
     def step(self, action):

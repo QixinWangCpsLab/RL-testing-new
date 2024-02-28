@@ -1,34 +1,59 @@
 import gymnasium as gym
 import numpy as np
+import math
+import random
+from stable_baselines3 import SAC
+
+
+def generate_states_actions(env, num_samples=10, min_distance=0.1):
+    state_action_dict = {}
+    states_sampled = 0
+
+    while states_sampled < num_samples:
+        # 随机采样一个状态
+        state = env.observation_space.sample()
+
+        # 检查新状态与已有状态的距离是否足够大
+        too_close = any(abs(np.array(state[0]) - np.array(existing_state[0])) < min_distance
+                        for existing_state in state_action_dict.keys())
+
+        if not too_close:
+            action = env.action_space.sample()
+
+            # 保存状态和动作
+            state_action_dict[tuple(state)] = action
+            states_sampled += 1
+
+    # 随机丢弃生成的script中的一些内容
+    keys = list(state_action_dict.keys())
+    random.shuffle(keys)  # 打乱键的顺序
+    keys_to_remove = keys[:len(keys) // 4]  # 准备取走四分之一的键
+
+    for key in keys_to_remove:
+        del state_action_dict[key]  # 从字典中移除选中的键
+
+    return state_action_dict
 
 
 class EnvWrapper(gym.Env):
     def __init__(self):
-        self.env = gym.make('FrozenLake-v1', map_name="4x4", is_slippery=False, max_episode_steps=200,
-                            render_mode="rgb_array")
-        # self.env = gym.make('FrozenLake-v1', desc=None, map_name="4x4", is_slippery=False, max_episode_steps = 20)
-        # self.env = gym.make("CartPole-v1", max_episode_steps=200)
+        self.env = gym.make("MountainCarContinuous-v0", render_mode='human')
         self.action_space = self.env.action_space
         self.observation_space = self.env.observation_space
-        self.rewarded_actions = {}
-        self.current_state = 0
+        self.rewarded_actions = {-0.54: 1}
+        self.current_state = -0.54
         self.state_action_pairs = []  # List to record all (state, action) tuples
         self.Done = False
-        self.distance_bound = 1
+        self.distance_bound = 0.05
 
     def render(self):
         return self.env.render()
 
     def state_similarity(self, current_state, ideal_state):
-        # 定义状态相似度的计算
-        # 假设状态相似度是基于状态索引的差异
-        # 在FrozenLake环境中，可以假设每个状态在一个4x4的网格中，可以计算二维空间中的距离
-        current_x, current_y = divmod(current_state, 4)
-        ideal_x, ideal_y = divmod(ideal_state, 4)
-        distance = np.sqrt((current_x - ideal_x) ** 2 + (current_y - ideal_y) ** 2)
+        distance = abs(current_state[0] - ideal_state[0])
         # 相似度是距离的递减函数
         # 使用指数递减
-        similarity = np.exp(-distance)
+        similarity = np.exp(-distance * 10)
         return similarity
 
     def action_similarity(self, action, ideal_action):
@@ -38,10 +63,7 @@ class EnvWrapper(gym.Env):
         return similarity
 
     def calculate_distance(self, current_state, ideal_state):
-        # 计算两个状态之间的距离
-        current_x, current_y = divmod(current_state, 4)
-        ideal_x, ideal_y = divmod(ideal_state, 4)
-        distance = np.sqrt((current_x - ideal_x) ** 2 + (current_y - ideal_y) ** 2)
+        distance = abs(current_state[0] - ideal_state[0])
         return distance
 
     def step(self, action):
@@ -50,9 +72,9 @@ class EnvWrapper(gym.Env):
         closest_state = min(self.rewarded_actions.keys(), key=lambda s: self.calculate_distance(self.current_state, s))
         distance = self.calculate_distance(self.current_state, closest_state)
 
-        # 如果距离小于或距离阈值(1)，使用模糊逻辑调整奖励
+        # 如果距离小于或距离阈值0.1，使用模糊逻辑调整奖励
         if distance < self.distance_bound:
-            state_sim = np.exp(-distance)  # 用指数函数计算相似度
+            state_sim = self.state_similarity(self.current_state, closest_state)  # 用指数函数计算相似度
             action_sim = self.action_similarity(action, self.rewarded_actions[closest_state])
             # 使用状态相似度和动作相似度来计算奖励
             fuzzy_reward = state_sim * action_sim
@@ -62,7 +84,7 @@ class EnvWrapper(gym.Env):
                 reward = -1
 
         # 其他奖励逻辑保持不变
-        elif obs == 15:
+        elif obs[0] > 0.45:
             reward = 5
         elif terminated:
             reward = -3
@@ -102,19 +124,17 @@ class EnvWrapper(gym.Env):
         return self.env.desc
 
 
-if __name__ == "__main__":
-    env = EnvWrapper()
-    env.set_rewarded_actions(rewarded_actions={0: 2, 1: 2, 2: 1})
-    env.reset()
-    env.render()
-    observation, info = env.reset()
-    for _ in range(20):
+env = EnvWrapper()
+env.set_rewarded_actions({(-0.4, 0.6): -0.9, (0.1, -0.6): 0.9})
+print(env.reset())
 
-        action = env.action_space.sample()  # agent policy that uses the observation and info
-        observation_new, reward, terminated, truncated, info = env.step(action)
-        print(observation, action, reward)
-        observation = observation_new
+# 创建一个 Soft Actor-Critic (SAC) 模型
+model = SAC("MlpPolicy", env, verbose=1)
 
-        if terminated or truncated:
-            observation, info = env.reset()
-    env.close()
+# # 训练模型
+model.learn(total_timesteps=1000)
+
+
+# state_action_dict = generate_states_actions(env=env)
+#
+# print(state_action_dict)
