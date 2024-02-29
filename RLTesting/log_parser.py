@@ -218,6 +218,6 @@ def parse_mountaincar_log_file(log_file_path):
 
 
 if __name__ == '__main__':
-    result = parse_mountaincar_log_file('mountaincar_env/mountaincar_bugfree/time_2024-02-29round_1')
+    result = parse_mountaincar_log_file('mountaincar/mountaincar_bugfree/time_2024-02-29round_1')
     # print(len(result))
     print(result)

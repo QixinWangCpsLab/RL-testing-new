@@ -156,9 +156,9 @@ def check_injection_validation(bug_id_ist):
 
 
 
-def inject_bugs(config):
+def inject_bugs(config, bug_id_list):
     # if config['specific_bug_flag']:
-    bug_id_list = config['specified_bug_id']
+    # bug_id_list = config['specified_bug_id']
     # else:
         # print('???????') # need to randomly generate bug versions
     
