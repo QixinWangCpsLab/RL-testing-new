@@ -37,7 +37,7 @@ def generate_states_actions(env, num_samples=10, min_distance=0.1):
 
 class EnvWrapper(gym.Env):
     def __init__(self):
-        self.env = gym.make("MountainCarContinuous-v0", render_mode='human')
+        self.env = gym.make("MountainCarContinuous-v0", render_mode='rgb_array')
         self.action_space = self.env.action_space
         self.observation_space = self.env.observation_space
         self.rewarded_actions = {-0.54: 1}

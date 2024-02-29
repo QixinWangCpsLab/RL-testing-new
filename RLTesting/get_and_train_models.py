@@ -162,17 +162,17 @@ def get_SAC_Model(env, model_path=os.path.join('RLTesting', 'logs', 'sac.zip')):
     else:
         print("creating new model")
         model = SAC('MlpPolicy', env, verbose=1)
-        new_logger = configure(folder="logs", format_strings=["stdout", "log", "csv", "tensorboard"])
-        model.set_logger(new_logger)
+        # new_logger = configure(folder="logs", format_strings=["stdout", "log", "csv", "tensorboard"])
+        # model.set_logger(new_logger)
     return model
 
 
 def train_SAC_model(model, max_steps=80, model_path=os.path.join('RLTesting', 'logs', 'sac.zip')):
     vec_env = model.get_env()
     vec_env.reset()
-    vec_env.render()
-    callback = TerminateOnDoneCallback(vec_env, verbose=1)
-    model.learn(max_steps, callback=callback)
+    # vec_env.render()
+    # callback = TerminateOnDoneCallback(vec_env, verbose=1)
+    model.learn(max_steps)
     action_state_list = vec_env.envs[0].get_state_action_pairs()
     model.save(model_path)
     vec_env.close()
