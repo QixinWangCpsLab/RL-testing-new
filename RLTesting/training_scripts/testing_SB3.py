@@ -11,7 +11,7 @@ import pandas as pd
 
 import sys
 
-sys.path.insert(0, './training_scripts/')
+sys.path.insert(0, '/')
 import training_scripts
 #
 # import training_scripts.DQN_step_by_step as DQNS
@@ -102,13 +102,13 @@ def round_loop(config):
     BL.inject_bugs(config)
 
     # pip reinstall SB3 repository
-    os.chdir("..")
+    os.chdir("../..")
     os.system('pip install -e .')
 
     for round in range(config['rounds']):
         print("round: " + str(round) + "----")
 
-        log_dir = os.path.join(config['root_dir'], 'RLTesting', 'logs')
+        log_dir = os.path.join(config['root_dir'], 'RLTesting', '../logs')
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
         log_name = 'time_' + str(date.today()) + str(config['specified_bug_id']) + 'round_' + str(round)
@@ -128,15 +128,15 @@ def round_loop(config):
 
         # 根据config中的'model_type'选择模型和训练函数
         if config['model_type'] == 'dqn':
-            model_path = os.path.join('RLTesting', 'logs', 'dqn.zip')
+            model_path = os.path.join('RLTesting', '../logs', 'dqn.zip')
             model = get_DQN_Model(env=env, model_path=model_path)
             train_func = train_DQN_model_new
         elif config['model_type'] == 'ppo':
-            model_path = os.path.join('RLTesting', 'logs', 'ppo.zip')
+            model_path = os.path.join('RLTesting', '../logs', 'ppo.zip')
             model = get_PPO_Model(env=env, model_path=model_path)
             train_func = train_PPO_model
         elif config['model_type'] == 'a2c':
-            model_path = os.path.join('RLTesting', 'logs', 'a2c.zip')
+            model_path = os.path.join('RLTesting', '../logs', 'a2c.zip')
             model = get_A2C_Model(env=env, model_path=model_path)
             train_func = train_A2C_model
         else:

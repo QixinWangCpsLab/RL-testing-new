@@ -1,5 +1,65 @@
 import gymnasium as gym
 import numpy as np
+import random
+
+def get_random_station_action_rewarder(env):
+    state_action_dict = {}
+    lake_size = int(env.observation_space.n ** 0.5)  # Assuming the lake is a square
+    goal_state = env.observation_space.n - 1  # Assuming the goal state is the last one
+
+    # 遍历所有状态
+    for state in range(env.observation_space.n):
+        safe_actions = []
+
+        # 检查当前状态下的所有动作
+        for action in range(env.action_space.n):
+            # 获得执行动作后的潜在结果列表
+            transitions = env.P[state][action]
+
+            # 检查每个潜在结果，确保它不会导致掉入冰窟（H）或走出边界
+            for transition in transitions:
+                prob, next_state, reward, done = transition
+                if prob == 1.0:
+                    # 如果下一个状态是终点，则这个动作是安全的
+                    if next_state == goal_state:
+                        safe_actions.append(action)
+                        break
+                    row, col = divmod(next_state, lake_size)
+                    # 检查是否会走出边界
+                    if action == 0 and col == 0:  # 左动作，当前在最左列
+                        continue
+                    if action == 1 and row == (lake_size - 1):  # 下动作，当前在最下行
+                        continue
+                    if action == 2 and col == (lake_size - 1):  # 右动作，当前在最右列
+                        continue
+                    if action == 3 and row == 0:  # 上动作，当前在最上行
+                        continue
+                    # 检查下一个状态是否是洞（H）
+                    if env.desc.reshape(-1)[next_state] != b'H':
+                        safe_actions.append(action)
+                        break  # 适用于确定性环境，无需检查其他transition
+
+        # 如果有安全的动作，随机选择一个
+        if safe_actions:
+            action = random.choice(safe_actions)
+            state_action_dict[state] = action
+
+    # state15表示已经到达终点，不需要采取其他任何动作
+    if 15 in state_action_dict:
+        del state_action_dict[15]
+
+    if 14 in state_action_dict:
+        del state_action_dict[14]
+
+    # 随机丢弃生成的script中的一些内容
+    keys = list(state_action_dict.keys())
+    random.shuffle(keys)  # 打乱键的顺序
+    keys_to_remove = keys[:len(keys) // 4]  # 准备取走四分之一的键
+
+    for key in keys_to_remove:
+        del state_action_dict[key]  # 从字典中移除选中的键
+
+    return state_action_dict
 
 
 class EnvWrapper(gym.Env):
@@ -56,7 +116,7 @@ class EnvWrapper(gym.Env):
             action_sim = self.action_similarity(action, self.rewarded_actions[closest_state])
             # 使用状态相似度和动作相似度来计算奖励
             fuzzy_reward = state_sim * action_sim
-            if fuzzy_reward > 0.8:
+            if fuzzy_reward > 0.7:
                 reward = fuzzy_reward
             else:
                 reward = -1

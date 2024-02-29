@@ -1,7 +1,8 @@
-import bug_lib as BL
+import RLTesting.bug_lib as BL
 import subprocess
 import os
 import sys
+import gymnasium as gym
 
 sys.path.insert(0, './training_scripts/')
 from stable_baselines3 import DQN, PPO, A2C, SAC
@@ -10,8 +11,6 @@ from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.env_util import make_vec_env
 import random
 import numpy as np
-
-import training_scripts.Env
 
 
 class TerminateOnDoneCallback(BaseCallback):
@@ -155,27 +154,22 @@ def train_A2C_model(model, max_steps=80, model_path=os.path.join('RLTesting', 'l
     return action_state_list
 
 
-def get_SAC_Model(env, model_path=os.path.join('RLTesting', 'logs', 'sac.zip')):
+def get_SAC_Model(env, model_path):
     if os.path.isfile(model_path):
         print("loading existing model")
         model = SAC.load(model_path, env=env)
     else:
         print("creating new model")
         model = SAC('MlpPolicy', env, verbose=1)
-        # new_logger = configure(folder="logs", format_strings=["stdout", "log", "csv", "tensorboard"])
-        # model.set_logger(new_logger)
     return model
 
 
-def train_SAC_model(model, max_steps=80, model_path=os.path.join('RLTesting', 'logs', 'sac.zip')):
+def train_SAC_model(model, max_steps=100, model_path=os.path.join('RLTesting', 'logs', 'sac.zip')):
     vec_env = model.get_env()
-    vec_env.reset()
-    # vec_env.render()
-    # callback = TerminateOnDoneCallback(vec_env, verbose=1)
     model.learn(max_steps)
     action_state_list = vec_env.envs[0].get_state_action_pairs()
     model.save(model_path)
-    vec_env.close()
+    vec_env.reset()
     return action_state_list
 
 
@@ -185,8 +179,9 @@ if __name__ == '__main__':
     # model = get_PPO_Model(env=env)
     # result = train_PPO_model(model=model)
 
-    env1 = training_scripts.Env.EnvWrapper()
-    model_a2c = get_A2C_Model(env=env1)
+    env = gym.make('FrozenLake-v1', map_name="4x4", is_slippery=False, max_episode_steps=200,
+                   render_mode="rgb_array")
+    model_a2c = get_A2C_Model(env=env)
     result_a2c = train_PPO_model(model=model_a2c)
 
     # env2 = training_scripts.Env.EnvWrapper()

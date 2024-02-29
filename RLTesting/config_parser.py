@@ -1,22 +1,20 @@
 from configparser import ConfigParser
+import os
 
 def parserConfig():
     cfg = ConfigParser()
-    cfg.read('config.ini')
+    # 获取当前脚本文件的绝对路径
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # 构建config.ini文件的绝对路径
+    config_path = os.path.join(script_dir, 'config.ini')
+
+    # 读取配置文件
+    cfg.read(config_path)
     config = {}
     config['root_dir'] = cfg.get('param', 'root_dir')
-    # config['real_life'] = cfg.get('param','real_life')
+    # 其他配置项...
 
-    # config['bug_num'] = int(cfg.get('param','bug_num'))
-    # config['specific_bug'] = cfg.get('param','specific_bug')
-    
-    # temp = cfg.get('param', 'specified_bug_id')[1:-1]
-    # if temp == '':
-    #     config['specified_bug_id'] = []
-    # else:
-    #     config['specified_bug_id'] = [int(t.strip()) for t in temp.split(',')]
-    #
-    # config['epoches'] = int(cfg.get('param', 'epoches'))
-    # config['rounds'] = int(cfg.get('param', 'rounds'))
-    # config['model_type'] = cfg.get('param', 'model_type')
     return config
+
+if __name__ == '__main__':
+    parserConfig()
