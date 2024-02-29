@@ -61,7 +61,7 @@ def round_loop(config, rounds=25, epochs=300, bug_list=[], model_type='dqn'):
             raise ValueError("Unsupported model type")
 
         for epoch in range(300):
-            actions_in_epoch = train_func(model=model, max_steps=100, model_path=model_path)
+            actions_in_epoch = train_func(model=model, max_steps=200, model_path=model_path)
             with open(log_path, 'a') as log_file:
                 log_file.write('epoch: ' + str(epoch) + '\n')
                 log_file.write(str(actions_in_epoch))
