@@ -50,3 +50,5 @@ src
 MUJOCO_LOG.TXT
 
 !/RLTesting/logs
+
+RLTesting/config.ini
