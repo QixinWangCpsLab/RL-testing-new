@@ -108,10 +108,10 @@ def train_DQN_model_new(model, max_steps=200, model_path=os.path.join('RLTesting
 def get_PPO_Model(env, model_path=os.path.join('RLTesting', 'logs', 'ppo.zip')):
     if os.path.isfile(model_path):
         print("loading existing model")
-        model = PPO.load(model_path, env=env, n_steps=16)
+        model = PPO.load(model_path, env=env)
     else:
         print("creating new model")
-        model = PPO('MlpPolicy', env=env, n_steps=16)
+        model = PPO('MlpPolicy', env=env)
         # new_logger = configure(folder="logs", format_strings=["stdout", "log", "csv", "tensorboard"])
         # model.set_logger(new_logger)
     return model
