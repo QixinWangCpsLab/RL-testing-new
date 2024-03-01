@@ -88,7 +88,7 @@ def parse_log_file_new(log_file_path):
     return epoch_accuracies
 
 
-def calculate_reward_membership(action, ideal_action, fuzziness=0.5):
+def calculate_reward_membership(action, ideal_action, fuzziness=0.99):
     """
     计算一个动作相对于理想动作的模糊隶属度。
     Args:
@@ -99,10 +99,10 @@ def calculate_reward_membership(action, ideal_action, fuzziness=0.5):
     Returns:
         float: 表示隶属度的数值
     """
-    distance = abs(action - ideal_action)
-    if distance != 0:
-        distance = 0.99
-    return max(1 - fuzziness * distance, 0)
+    if action == ideal_action:
+        return 1
+    else:
+        return 0
 
 
 
@@ -132,6 +132,7 @@ def parse_log_file_fuzzy(log_file_path):
         # 初始化计数器
         total_actions = len(actions_data)
         fuzzy_rewarded_sum = 0
+        base = 0
 
         # 检查每个动作的模糊rewarded程度
         for state, action in actions_data:
@@ -141,9 +142,10 @@ def parse_log_file_fuzzy(log_file_path):
                 # 计算模糊隶属度
                 membership = calculate_reward_membership(action, ideal_action)
                 fuzzy_rewarded_sum += membership
+                base += 1
 
         # 计算模糊准确率并添加到列表
-        fuzzy_accuracy = fuzzy_rewarded_sum / total_actions if total_actions > 0 else 0
+        fuzzy_accuracy = fuzzy_rewarded_sum / base if base > 0 else 0
         epoch_fuzzy_accuracies.append(fuzzy_accuracy)
 
     return epoch_fuzzy_accuracies
@@ -199,6 +201,7 @@ def parse_mountaincar_log_file(log_file_path):
             # print(len(actions_state_data))
 
             epoch_sim = 0
+            base = 0
             for action_state_data in actions_state_data:
                 closest_state = min(rewarded_actions_dict.keys(),
                                     key=lambda s: mountaincar_state_distance(action_state_data[0], s))
@@ -208,8 +211,9 @@ def parse_mountaincar_log_file(log_file_path):
                     # 使用状态相似度和动作相似度来计算奖励
                     fuzzy_sim = state_sim * action_sim
                     epoch_sim += fuzzy_sim
+                    base += 1
 
-            epoch_fuzzy_accuracies.append(epoch_sim)
+            epoch_fuzzy_accuracies.append(epoch_sim/base)
 
     except Exception as e:
         print(f"An error occurred: {e}")

@@ -1,6 +1,6 @@
 import time
 
-import RLTesting.bug_lib as BL
+import bug_lib as BL
 import subprocess
 import os
 from datetime import date
@@ -14,17 +14,17 @@ import sys
 sys.path.insert(0, './training_scripts/')
 #
 # import training_scripts.DQN_step_by_step as DQNS
-from RLTesting.config_parser import parserConfig
+from config_parser import parserConfig
 
 import gymnasium as gym
 from stable_baselines3 import DQN
 from stable_baselines3.common.vec_env import DummyVecEnv
-from Frozenlake_Env import *
+from frozenlake.Frozenlake_Env import *
 from stable_baselines3.common.logger import configure
 
 import random
 
-from RLTesting.get_and_train_models import *
+from get_and_train_models import *
 
 
 def round_loop(config, rounds=25, epochs=300, bug_list=[], model_type='dqn'):
@@ -57,17 +57,19 @@ def round_loop(config, rounds=25, epochs=300, bug_list=[], model_type='dqn'):
             log_file.write('rewarded_actions' + str(rewarded_actions))
             log_file.write("\n-------------\n")
 
+        model_path=os.path.join('logs', 'model.zip')
+        model = None
         # 根据config中的'model_type'选择模型和训练函数
         if model_type == 'dqn':
-            model_path = os.path.join('RLTesting', 'logs', 'dqn.zip')
+            model_path = os.path.join(config['root_dir'], 'RLTesting', 'logs', 'Frozenlake', model_type, 'dqn.zip')
             model = get_DQN_Model(env=env, model_path=model_path)
             train_func = train_DQN_model_new
         elif model_type == 'ppo':
-            model_path = os.path.join('RLTesting', 'logs', 'ppo.zip')
+            model_path = os.path.join(config['root_dir'], 'RLTesting', 'logs', 'Frozenlake', model_type, 'ppo.zip')
             model = get_PPO_Model(env=env, model_path=model_path)
             train_func = train_PPO_model
         elif model_type == 'a2c':
-            model_path = os.path.join('RLTesting', 'logs', 'a2c.zip')
+            model_path = os.path.join(config['root_dir'], 'RLTesting', 'logs', 'Frozenlake', model_type, 'a2c.zip')
             model = get_A2C_Model(env=env, model_path=model_path)
             train_func = train_A2C_model
         else:
@@ -98,21 +100,3 @@ def main(bug_version_list, rounds=25, epochs=300, model_type='dqn'):
 
         round_loop(config=parserConfig(), rounds=rounds, epochs=epochs, bug_list=bug_version, model_type=model_type)
 
-
-# initialize bug_version_list
-bug_version_list = [
-    [],
-    # [0],
-    # [1],
-    # [2],
-    # [3],
-    # [4],
-    #
-    # [6],
-    # [7],
-    # [8],
-    # [9],
-    # [10],
-]
-
-main(bug_version_list)

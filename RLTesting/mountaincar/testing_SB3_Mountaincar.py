@@ -42,19 +42,19 @@ def round_loop(config, rounds=25, epochs=300, bug_list=[], model_type='dqn'):
 
         # 根据config中的'model_type'选择模型和训练函数
         if model_type == 'dqn':
-            model_path = os.path.join('RLTesting', 'logs', 'Mountaincar', model_type, 'dqn.zip')
+            model_path = os.path.join(config['root_dir'], 'RLTesting', 'logs', 'Mountaincar', model_type, 'dqn.zip')
             model = G_T_modles.get_DQN_Model(env=env, model_path=model_path)
             train_func = G_T_modles.train_DQN_model_new
         elif model_type == 'sac':
-            model_path = os.path.join('RLTesting', 'logs', 'Mountaincar', model_type,  'sac.zip')
+            model_path = os.path.join(config['root_dir'], 'RLTesting', 'logs', 'Mountaincar', model_type,  'sac.zip')
             model = G_T_modles.get_SAC_Model(env=env, model_path=model_path)
             train_func = G_T_modles.train_SAC_model
         elif model_type == 'ppo':
-            model_path = os.path.join('RLTesting', 'logs', 'Mountaincar', model_type,  'ppo.zip')
+            model_path = os.path.join(config['root_dir'], 'RLTesting', 'logs', 'Mountaincar', model_type,  'ppo.zip')
             model = G_T_modles.get_PPO_Model(env=env, model_path=model_path)
             train_func = G_T_modles.train_PPO_model
         elif model_type == 'a2c':
-            model_path = os.path.join('RLTesting', 'logs', 'Mountaincar', model_type,  'a2c.zip')
+            model_path = os.path.join(config['root_dir'], 'RLTesting', 'logs', 'Mountaincar', model_type,  'a2c.zip')
             model = G_T_modles.get_A2C_Model(env=env, model_path=model_path)
             train_func = G_T_modles.train_A2C_model
         else:

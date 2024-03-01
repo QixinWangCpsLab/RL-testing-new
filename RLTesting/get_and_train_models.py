@@ -1,4 +1,4 @@
-import RLTesting.bug_lib as BL
+import bug_lib as BL
 import subprocess
 import os
 import sys
@@ -51,7 +51,7 @@ def get_DQN_Model(env, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
 
 
 # abandoned 
-def train_DQN_model(model, max_steps=80, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
+# def train_DQN_model(model, max_steps=80, model_path):
     vec_env = model.get_env()
     obs = vec_env.reset()
     vec_env.render(mode='human')
@@ -94,15 +94,14 @@ def train_DQN_model(model, max_steps=80, model_path=os.path.join('RLTesting', 'l
     return action_state_list
 
 
-def train_DQN_model_new(model, max_steps=80, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
+def train_DQN_model_new(model, max_steps=200, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
     vec_env = model.get_env()
-    vec_env.reset()
-    vec_env.render()
-    callback = TerminateOnDoneCallback(vec_env, verbose=1)
-    model.learn(max_steps, callback=callback)
+    # vec_env.render()
+    # model.learn(max_steps, callback=TerminateOnDoneCallback(vec_env, verbose=1))
+    model.learn(max_steps)
     action_state_list = vec_env.envs[0].get_state_action_pairs()
     model.save(model_path)
-    vec_env.close()
+    vec_env.reset()
     return action_state_list
 
 
@@ -118,7 +117,7 @@ def get_PPO_Model(env, model_path=os.path.join('RLTesting', 'logs', 'ppo.zip')):
     return model
 
 
-def train_PPO_model(model, max_steps=80, model_path=os.path.join('RLTesting', 'logs', 'ppo.zip')):
+def train_PPO_model(model, max_steps=200, model_path=os.path.join('RLTesting', 'logs', 'ppo.zip')):
     vec_env = model.get_env()
     vec_env.reset()
     vec_env.render()
@@ -142,7 +141,7 @@ def get_A2C_Model(env, model_path=os.path.join('RLTesting', 'logs', 'a2c.zip')):
     return model
 
 
-def train_A2C_model(model, max_steps=80, model_path=os.path.join('RLTesting', 'logs', 'a2c.zip')):
+def train_A2C_model(model, max_steps=200, model_path=os.path.join('RLTesting', 'logs', 'a2c.zip')):
     vec_env = model.get_env()
     vec_env.reset()
     vec_env.render()
@@ -164,7 +163,7 @@ def get_SAC_Model(env, model_path):
     return model
 
 
-def train_SAC_model(model, max_steps=100, model_path=os.path.join('RLTesting', 'logs', 'sac.zip')):
+def train_SAC_model(model, max_steps=200, model_path=os.path.join('RLTesting', 'logs', 'sac.zip')):
     vec_env = model.get_env()
     model.learn(max_steps)
     action_state_list = vec_env.envs[0].get_state_action_pairs()
