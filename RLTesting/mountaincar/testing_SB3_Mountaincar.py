@@ -1,18 +1,15 @@
-import sys
-
-sys.path.insert(0, '../')
-import RLTesting.bug_lib as BL
+import bug_lib as BL
 import os
 from datetime import date
 
-import Mountaincar_Env as Env
+import mountaincar.Mountaincar_Env as Env
 
-import RLTesting.get_and_train_models as G_T_modles
+import get_and_train_models as G_T_modles
 
-from RLTesting.config_parser import parserConfig
+from config_parser import parserConfig
 
 
-def round_loop(config, rounds=25, epochs=300, bug_list=[], model_type='dqn'):
+def round_loop(config, rounds, epochs, bug_list, model_type):
     BL.recover_project(config)
     BL.inject_bugs(config=config, bug_id_list=bug_list)
 
@@ -60,7 +57,7 @@ def round_loop(config, rounds=25, epochs=300, bug_list=[], model_type='dqn'):
         else:
             raise ValueError("Unsupported model type")
 
-        for epoch in range(300):
+        for epoch in range(epochs):
             actions_in_epoch = train_func(model=model, max_steps=200, model_path=model_path)
             with open(log_path, 'a') as log_file:
                 log_file.write('epoch: ' + str(epoch) + '\n')
@@ -70,8 +67,8 @@ def round_loop(config, rounds=25, epochs=300, bug_list=[], model_type='dqn'):
         os.remove(model_path)
 
 
-# 默认使用dqn进行训练
-def main(bug_version_list, rounds=5, epochs=300, model_type='sac'):
+# 默认使用sac进行训练
+def main(bug_version_list, rounds, epochs, model_type):
     for bug_version in bug_version_list:
 
         # 对于特殊的bug version指定model type
@@ -82,21 +79,3 @@ def main(bug_version_list, rounds=5, epochs=300, model_type='sac'):
 
         round_loop(config=parserConfig(), rounds=rounds, epochs=epochs, bug_list=bug_version, model_type=model_type)
 
-
-# initialize bug_version_list
-bug_version_list = [
-    [],
-    # [0],
-    # [1],
-    # [2],
-    # [3],
-    # [4],
-    #
-    # [6],
-    # [7],
-    # [8],
-    # [9],
-    # [10],
-]
-
-main(bug_version_list)

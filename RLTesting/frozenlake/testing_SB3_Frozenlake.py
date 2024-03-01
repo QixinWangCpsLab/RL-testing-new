@@ -88,7 +88,7 @@ def round_loop(config, rounds=25, epochs=300, bug_list=[], model_type='dqn'):
 
 
 # 默认使用dqn进行训练
-def main(bug_version_list, rounds=25, epochs=300, model_type='dqn'):
+def main(bug_version_list, rounds, epochs, model_type):
 
     for bug_version in bug_version_list:
 

@@ -213,7 +213,10 @@ def parse_mountaincar_log_file(log_file_path):
                     epoch_sim += fuzzy_sim
                     base += 1
 
-            epoch_fuzzy_accuracies.append(epoch_sim/base)
+            if base != 0:
+                epoch_fuzzy_accuracies.append(epoch_sim/base)
+            else:
+                epoch_fuzzy_accuracies.append(0)
 
     except Exception as e:
         print(f"An error occurred: {e}")
