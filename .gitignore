@@ -53,3 +53,4 @@ MUJOCO_LOG.TXT
 
 RLTesting/config.ini
 RLTesting/config.ini
+*.ini

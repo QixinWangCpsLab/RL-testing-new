@@ -41,10 +41,10 @@ class TerminateOnDoneCallback(BaseCallback):
 def get_DQN_Model(env, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
     if os.path.isfile(model_path):
         print("loading existing model")
-        model = DQN.load(model_path, env=env, batch_size=4, learning_rate = 0.025, learning_starts=0)
+        model = DQN.load(model_path, env=env, batch_size=2, learning_starts=0)
     else:
         print("creating new model")
-        model = DQN("MlpPolicy", env, batch_size=4, learning_rate=0.025, learning_starts=0)
+        model = DQN("MlpPolicy", env, batch_size=2, learning_starts=0)
         # new_logger = configure(folder="logs", format_strings=["stdout", "log", "csv", "tensorboard"])
         # model.set_logger(new_logger)
     return model
@@ -97,8 +97,8 @@ def get_DQN_Model(env, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
 def train_DQN_model_new(model, max_steps=200, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
     vec_env = model.get_env()
     # vec_env.render()
-    # model.learn(max_steps, callback=TerminateOnDoneCallback(vec_env, verbose=1))
-    model.learn(max_steps)
+    model.learn(max_steps, callback=TerminateOnDoneCallback(vec_env, verbose=1))
+    # model.learn(max_steps)
     action_state_list = vec_env.envs[0].get_state_action_pairs()
     model.save(model_path)
     vec_env.reset()
