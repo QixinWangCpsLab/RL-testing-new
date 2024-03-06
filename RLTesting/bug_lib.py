@@ -2,6 +2,7 @@ import os
 import random
 from itertools import combinations
 import shutil
+from config_parser import parserConfig
 
 
 bug_group = [
@@ -239,3 +240,13 @@ def recover_project(config):
 
         # 复制整个目录树
         shutil.copytree(archive_subfolder_path, main_subfolder_path)
+        
+        
+def cover_then_inject_bugs(bug_list):
+    config=parserConfig()
+    recover_project(config)
+    inject_bugs(config=config, bug_id_list=bug_list)
+
+    # pip reinstall SB3 repository
+    os.chdir(config['root_dir'])
+    os.system('pip install -e .')

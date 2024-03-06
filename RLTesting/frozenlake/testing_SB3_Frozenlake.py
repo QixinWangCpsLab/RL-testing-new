@@ -99,15 +99,13 @@ def inject_bugs(bug_list):
 
 
 # 默认使用dqn进行训练
-def main(bug_version_list, rounds, epochs, model_type):
+def main(bug_version, rounds, epochs, model_type):
 
-    for bug_version in bug_version_list:
+    # 对于特殊的bug version指定model type
+    if bug_version in [[7], ]:
+        model_type = 'ppo'
+    elif bug_version in [[8], ]:
+        model_type = 'a2c'
 
-        # 对于特殊的bug version指定model type
-        if bug_version in [[7], ]:
-            model_type = 'ppo'
-        elif bug_version in [[8], ]:
-            model_type = 'a2c'
-
-        round_loop(config=parserConfig(), rounds=rounds, epochs=epochs, bug_list=bug_version, model_type=model_type)
+    round_loop(config=parserConfig(), rounds=rounds, epochs=epochs, bug_list=bug_version, model_type=model_type)
 

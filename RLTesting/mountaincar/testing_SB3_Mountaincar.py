@@ -10,12 +10,12 @@ from config_parser import parserConfig
 
 
 def round_loop(config, rounds, epochs, bug_list, model_type):
-    BL.recover_project(config)
-    BL.inject_bugs(config=config, bug_id_list=bug_list)
+    # BL.recover_project(config)
+    # BL.inject_bugs(config=config, bug_id_list=bug_list)
 
-    # pip reinstall SB3 repository
-    os.chdir(config['root_dir'])
-    os.system('pip install -e .')
+    # # pip reinstall SB3 repository
+    # os.chdir(config['root_dir'])
+    # os.system('pip install -e .')
 
     for round in range(rounds):
         print("round: " + str(round) + "----")
@@ -68,16 +68,15 @@ def round_loop(config, rounds, epochs, bug_list, model_type):
 
 
 # 默认使用sac进行训练
-def main(bug_version_list, rounds, epochs, model_type):
-    for bug_version in bug_version_list:
+def main(bug_version, rounds, epochs, model_type):
 
-        # 对于特殊的bug version指定model type
-        if bug_version in [[7], ]:
-            model_type = 'ppo'
-        elif bug_version in [[5], ]:
-            model_type = 'sac'
-        elif bug_version in [[8], ]:
-            model_type = 'a2c'
+    # 对于特殊的bug version指定model type
+    if bug_version in [[7], ]:
+        model_type = 'ppo'
+    elif bug_version in [[5], ]:
+        model_type = 'sac'
+    elif bug_version in [[8], ]:
+        model_type = 'a2c'
 
-        round_loop(config=parserConfig(), rounds=rounds, epochs=epochs, bug_list=bug_version, model_type=model_type)
+    round_loop(config=parserConfig(), rounds=rounds, epochs=epochs, bug_list=bug_version, model_type=model_type)
 
