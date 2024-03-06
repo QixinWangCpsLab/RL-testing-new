@@ -79,9 +79,9 @@ class EnvWrapper(gym.Env):
             # 使用状态相似度和动作相似度来计算奖励
             fuzzy_reward = state_sim * action_sim
             if fuzzy_reward > 0.7:
-                reward = fuzzy_reward
-            # else:
-            #     reward = -1
+                reward = fuzzy_reward * 5
+            else:
+                reward = -1
         else:
             reward = -1
 
