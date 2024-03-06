@@ -50,50 +50,6 @@ def get_DQN_Model(env, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
     return model
 
 
-# abandoned 
-# def train_DQN_model(model, max_steps=80, model_path):
-    # vec_env = model.get_env()
-    # obs = vec_env.reset()
-    # vec_env.render(mode='human')
-
-    # action_state_list = []
-
-    # for step in range(max_steps):
-    #     # 选择一个动作
-    #     action, _states = model.predict(obs)
-    #     # action, _states = model.predict(obs, deterministic=True)
-
-    #     # 环境执行动作
-    #     new_obs, reward, done, info = vec_env.step(action)
-
-    #     action_state_list.append(str(obs) + ',' + str(action) + ',' + str(reward))
-    #     # print("state, action:" + str(obs) + str(action))
-
-    #     # 存储新转换到回放缓冲区
-    #     model.replay_buffer.add(obs, new_obs, action, reward, done, info)
-
-    #     # 检查回放缓冲区是否有足够的数据来进行学习
-    #     if model.replay_buffer.size() > model.batch_size:
-    #         # 执行一步学习
-    #         model.train(gradient_steps=1)
-
-    #     # 将新观察结果设置为下一步的初始状态
-    #     obs = new_obs
-
-    #     # 检查是否结束
-    #     if done:
-    #         # 重置环境状态
-    #         obs = vec_env.reset()
-    #         break
-
-    # # 保存模型
-    # model.save(model_path)
-
-    # vec_env.close()
-
-    # return action_state_list
-
-
 def train_DQN_model_new(model, max_steps=200, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
     vec_env = model.get_env()
     # vec_env.render()
@@ -122,7 +78,7 @@ def train_PPO_model(model, max_steps=200, model_path=os.path.join('RLTesting', '
     vec_env.reset()
     vec_env.render()
     callback = TerminateOnDoneCallback(vec_env, verbose=1)
-    model.learn(max_steps, callback=callback)
+    model.learn(max_steps)
     action_state_list = vec_env.envs[0].get_state_action_pairs()
     model.save(model_path)
     vec_env.close()

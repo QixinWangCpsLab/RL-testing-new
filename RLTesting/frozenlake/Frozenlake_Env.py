@@ -119,7 +119,7 @@ class EnvWrapper(gym.Env):
             if fuzzy_reward > 0.7:
                 reward = fuzzy_reward * 5
             else:
-                reward = -1
+                reward = -0.5
 
         # # 其他奖励逻辑保持不变
         # elif obs == 15:
