@@ -28,12 +28,13 @@ from get_and_train_models import *
 
 
 def round_loop(config, rounds=25, epochs=300, bug_list=[], model_type='dqn'):
-    BL.recover_project(config)
-    BL.inject_bugs(config=config, bug_id_list=bug_list)
+    # BL.recover_project(config)
+    # BL.inject_bugs(config=config, bug_id_list=bug_list)
 
-    # pip reinstall SB3 repository
-    os.chdir(config['root_dir'])
-    os.system('pip install -e .')
+    # # pip reinstall SB3 repository
+    # os.chdir(config['root_dir'])
+    # os.system('pip install -e .')
+
 
     for round in range(rounds):
         print("round: " + str(round) + "----")
@@ -85,6 +86,16 @@ def round_loop(config, rounds=25, epochs=300, bug_list=[], model_type='dqn'):
             # time.sleep(0.2)
 
         os.remove(model_path)
+
+
+def inject_bugs(bug_list):
+    config=parserConfig()
+    BL.recover_project(config)
+    BL.inject_bugs(config=config, bug_id_list=bug_list)
+
+    # pip reinstall SB3 repository
+    os.chdir(config['root_dir'])
+    os.system('pip install -e .')
 
 
 # 默认使用dqn进行训练

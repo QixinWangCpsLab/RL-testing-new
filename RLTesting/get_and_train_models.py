@@ -44,7 +44,7 @@ def get_DQN_Model(env, model_path=os.path.join('RLTesting', 'logs', 'dqn.zip')):
         model = DQN.load(model_path, env=env, learning_starts=0)
     else:
         print("creating new model")
-        model = DQN("MlpPolicy", env, learning_starts=0)
+        model = DQN("MlpPolicy", env=env, learning_starts=0)
         # new_logger = configure(folder="logs", format_strings=["stdout", "log", "csv", "tensorboard"])
         # model.set_logger(new_logger)
     return model

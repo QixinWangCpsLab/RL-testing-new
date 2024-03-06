@@ -74,6 +74,8 @@ def main(bug_version_list, rounds, epochs, model_type):
         # 对于特殊的bug version指定model type
         if bug_version in [[7], ]:
             model_type = 'ppo'
+        elif bug_version in [[5], ]:
+            model_type = 'sac'
         elif bug_version in [[8], ]:
             model_type = 'a2c'
 
