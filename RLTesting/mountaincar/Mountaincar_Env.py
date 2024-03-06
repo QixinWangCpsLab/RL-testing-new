@@ -83,13 +83,13 @@ class EnvWrapper(gym.Env):
             else:
                 reward = -1
 
-        # 其他奖励逻辑保持不变
-        elif obs[0] > 0.45:
-            reward = 5
-        elif terminated:
-            reward = -3
-        else:
-            reward = -1
+        # # 其他奖励逻辑保持不变
+        # elif obs[0] > 0.45:
+        #     reward = 5
+        # elif terminated:
+        #     reward = -3
+        # else:
+        #     reward = -1
 
         self.current_state = obs
 
