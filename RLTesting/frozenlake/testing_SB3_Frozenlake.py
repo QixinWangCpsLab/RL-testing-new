@@ -102,10 +102,12 @@ def inject_bugs(bug_list):
 def main(bug_version, rounds, epochs, model_type):
 
     # 对于特殊的bug version指定model type
-    if bug_version in [[7], ]:
+    if bug_version in [[7], [15]]:
         model_type = 'ppo'
-    elif bug_version in [[8], ]:
+    elif bug_version in [[8], [11], [12], [13], [14]]:
         model_type = 'a2c'
+    elif len(bug_version) > 0:
+        model_type = 'dqn'
 
     round_loop(config=parserConfig(), rounds=rounds, epochs=epochs, bug_list=bug_version, model_type=model_type)
 

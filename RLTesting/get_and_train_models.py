@@ -67,7 +67,7 @@ def get_PPO_Model(env, model_path=os.path.join('RLTesting', 'logs', 'ppo.zip')):
         model = PPO.load(model_path, env=env)
     else:
         print("creating new model")
-        model = PPO('MlpPolicy', env=env)
+        model = PPO('MlpPolicy', env=env, batch_size=50, n_steps=100)
         # new_logger = configure(folder="logs", format_strings=["stdout", "log", "csv", "tensorboard"])
         # model.set_logger(new_logger)
     return model
