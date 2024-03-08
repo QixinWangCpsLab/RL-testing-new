@@ -135,7 +135,7 @@ class DQNPolicy(BasePolicy):
             if features_extractor_class == NatureCNN:
                 net_arch = []
             else:
-                net_arch = [64, 64]
+                net_arch = [64, 64]#bug 21
 
         #9th bug: 1
         #9th bug: 2 

@@ -143,6 +143,76 @@ bug_group = [
         'realife_bug': False,
         'description': "Wrong mistake on purpose without any meaning or explaination"
     }, # 15th bug
+    {
+        'relative_path': "/stable_baselines3/dqn/dqn.py",
+        'lineno': -1,  # no use
+        'original_lines': ['with th.no_grad():'],
+        'injected_lines': ['if True:'],
+        'realife_bug': False,
+        'description': ""
+    }, # 16th bug
+    {
+        'relative_path': "/stable_baselines3/dqn/dqn.py",
+        'lineno': -1,  # no use
+        'original_lines': ['target_q_values = replay_data.rewards + (1 - replay_data.dones) * self.gamma * next_q_values'],
+        'injected_lines': ['target_q_values = replay_data.rewards + replay_data.dones * self.gamma * next_q_values'],
+        'realife_bug': False,
+        'description': ""
+    }, # 17th bug
+    {
+        'relative_path': "/stable_baselines3/dqn/dqn.py",
+        'lineno': -1,  # no use
+        'original_lines': ['self.policy.optimizer.zero_grad()'],
+        'injected_lines': [''],
+        'realife_bug': False,
+        'description': ""
+    }, # 18th bug
+    {
+        'relative_path': "/stable_baselines3/dqn/dqn.py",
+        'lineno': -1,  # no use
+        'original_lines': ['next_q_values = self.q_net_target(replay_data.next_observations)'],
+        'injected_lines': ['next_q_values = self.q_net_target(replay_data.observations)'],
+        'realife_bug': False,
+        'description': ""
+    }, # 19th bug
+    {
+        'relative_path': "/stable_baselines3/dqn/dqn.py",
+        'lineno': -1,  # no use
+        'original_lines': ['current_q_values = self.q_net(replay_data.observations)'],
+        'injected_lines': ['current_q_values = self.q_net(replay_data.next_observations)'],
+        'realife_bug': False,
+        'description': ""
+    }, # 20th bug
+    {
+        'relative_path': "/stable_baselines3/dqn/policies.py",
+        'lineno': -1,  # no use
+        'original_lines': ['net_arch = [64, 64]#bug 21'],
+        'injected_lines': ['net_arch = [1, 1]#bug 21'],
+        'realife_bug': False,
+        'description': ""
+    }, # 21th bug
+    {
+        'relative_path': "/stable_baselines3/dqn/dqn.py",
+        'lineno': -1,  # no use
+        'original_lines': ['self.exploration_rate = self.exploration_schedule(self._current_progress_remaining)'],
+        'injected_lines': ['#self.exploration_rate = self.exploration_schedule(self._current_progress_remaining)'],
+        'realife_bug': False,
+        'description': ""
+    }, # 22th bug
+    {
+        'relative_path': "/stable_baselines3/dqn/dqn.py",
+        'lineno': -1,  # no use
+        'original_lines': ['target_q_values = replay_data.rewards + (1 - replay_data.dones) * self.gamma * next_q_values'],
+        'injected_lines': ['target_q_values = replay_data.rewards + (1 - replay_data.dones) * next_q_values'],
+        'realife_bug': False,
+        'description': ""
+    }, # 23th bug
+
+
+
+
+
+    
 ]
 
 
