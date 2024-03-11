@@ -207,8 +207,78 @@ bug_group = [
         'realife_bug': False,
         'description': ""
     }, # 23th bug
-
-
+    {
+        'relative_path': "/stable_baselines3/a2c/a2c.py",
+        'lineno': -1,  # no use
+        'original_lines': ['th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
+        'injected_lines': ['#th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
+        'realife_bug': False,
+        'description': "Disable clip grad norm. This may lead to gradient explosion."
+    }, # 24th bug
+    {
+        'relative_path': "/stable_baselines3/common/buffers.py",
+        'lineno': -1,  # no use
+        'original_lines': ['next_values = self.values[step + 1]'],
+        'injected_lines': ['next_values = self.values[step]'],
+        'realife_bug': False,
+        'description': "bug in actor critic advantage calculation. This bug will influence all algorithms using advantage, such as a2c, ppo"
+    }, # 25th bug
+    {
+        'relative_path': "/stable_baselines3/common/buffers.py",
+        'lineno': -1,  # no use
+        'original_lines': ['delta = self.rewards[step] + self.gamma * next_values * next_non_terminal - self.values[step]'],
+        'injected_lines': ['delta = self.rewards[step] + next_values * next_non_terminal - self.values[step]'],
+        'realife_bug': False,
+        'description': "bug in actor critic advantage calculation. This bug will influence all algorithms using advantage, such as a2c, ppo"
+    }, # 26th bug
+    {
+        'relative_path': "/stable_baselines3/common/buffers.py",
+        'lineno': -1,  # no use
+        'original_lines': ['for step in reversed(range(self.buffer_size)):'],
+        'injected_lines': ['for step in range(self.buffer_size):'],
+        'realife_bug': False,
+        'description': "bug in actor critic advantage calculation. This bug will influence all algorithms using advantage, such as a2c, ppo. Not sure whether this will cause a error or not."
+    }, # 27th bug
+    {
+        'relative_path': "/stable_baselines3/common/policies.py",
+        'lineno': -1,  # no use
+        'original_lines': ['net_arch = dict(pi=[64, 64], vf=[64, 64])'],
+        'injected_lines': ['net_arch = dict(pi=[1, 1], vf=[1, 1])'],
+        'realife_bug': False,
+        'description': "bug in A2C policy."
+    }, # 28th bug
+    {
+        'relative_path': "/stable_baselines3/a2c/a2c.py",
+        'lineno': -1,  # no use
+        'original_lines': ['policy_loss = -(advantages * log_prob).mean()'],
+        'injected_lines': ['policy_loss = (advantages * log_prob).mean()'],
+        'realife_bug': False,
+        'description': "bug in A2C train. Wrong policy loss."
+    }, # 29th bug
+    {
+        'relative_path': "/stable_baselines3/a2c/a2c.py",
+        'lineno': -1,  # no use
+        'original_lines': ['entropy_loss = th.mean(-log_prob)', 'entropy_loss = -th.mean(entropy)'],
+        'injected_lines': ['entropy_loss = th.mean(-log_prob)', 'entropy_loss = th.mean(entropy)'],
+        'realife_bug': False,
+        'description': "bug in A2C train. Wrong policy loss. Wrong entropy loss calculation"
+    }, # 30th bug
+    {
+        'relative_path': "/stable_baselines3/a2c/a2c.py",
+        'lineno': -1,  # no use
+        'original_lines': ['loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss'],
+        'injected_lines': ['loss = policy_loss + self.ent_coef * entropy_loss + value_loss'],
+        'realife_bug': False,
+        'description': "bug in A2C train. Wrong loss."
+    }, # 31th bug
+    {
+        'relative_path': "/stable_baselines3/a2c/a2c.py",
+        'lineno': -1,  # no use
+        'original_lines': ['self.policy.optimizer.zero_grad()'],
+        'injected_lines': ['#self.policy.optimizer.zero_grad()'],
+        'realife_bug': False,
+        'description': "bug in A2C train. Forget to run zero grad function"
+    }, # 32th bug
 
 
 

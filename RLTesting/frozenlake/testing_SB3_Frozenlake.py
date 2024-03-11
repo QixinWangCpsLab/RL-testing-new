@@ -35,7 +35,7 @@ def round_loop(config, rounds=25, epochs=300, bug_list=[], model_type='dqn'):
     # os.chdir(config['root_dir'])
     # os.system('pip install -e .')
 
-
+    print(model_type)
     for round in range(rounds):
         print("round: " + str(round) + "----")
 
@@ -101,13 +101,13 @@ def inject_bugs(bug_list):
 # 默认使用dqn进行训练
 def main(bug_version, rounds, epochs, model_type):
 
-    # 对于特殊的bug version指定model type
-    if bug_version in [[7], [15]]:
-        model_type = 'ppo'
-    elif bug_version in [[8], [11], [12], [13], [14]]:
-        model_type = 'a2c'
-    elif len(bug_version) > 0:
-        model_type = 'dqn'
+    # # 对于特殊的bug version指定model type
+    # if bug_version in [[7], [15]]:
+    #     model_type = 'ppo'
+    # elif bug_version in [[8], [11], [12], [13], [14]]:
+    #     model_type = 'a2c'
+    # elif len(bug_version) > 0:
+    #     model_type = 'dqn'
 
     round_loop(config=parserConfig(), rounds=rounds, epochs=epochs, bug_list=bug_version, model_type=model_type)
 
