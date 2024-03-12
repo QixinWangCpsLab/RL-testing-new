@@ -9,7 +9,7 @@ import get_and_train_models as G_T_modles
 from config_parser import parserConfig
 
 
-def round_loop(config, rounds, epochs, bug_list, model_type):
+def round_loop(config, rounds, epochs, bug_list, model_type, max_steps = 200):
     # BL.recover_project(config)
     # BL.inject_bugs(config=config, bug_id_list=bug_list)
 
@@ -58,7 +58,7 @@ def round_loop(config, rounds, epochs, bug_list, model_type):
             raise ValueError("Unsupported model type")
 
         for epoch in range(epochs):
-            actions_in_epoch = train_func(model=model, max_steps=200, model_path=model_path)
+            actions_in_epoch = train_func(model=model, max_steps=max_steps, model_path=model_path)
             with open(log_path, 'a') as log_file:
                 log_file.write('epoch: ' + str(epoch) + '\n')
                 log_file.write(str(actions_in_epoch))
@@ -68,7 +68,7 @@ def round_loop(config, rounds, epochs, bug_list, model_type):
 
 
 # 默认使用sac进行训练
-def main(bug_version, rounds, epochs, model_type):
+def main(bug_version, rounds, epochs, model_type, max_steps=200):
 
     # 对于特殊的bug version指定model type
     if bug_version in [[7], ]:
@@ -78,5 +78,5 @@ def main(bug_version, rounds, epochs, model_type):
     elif bug_version in [[8], ]:
         model_type = 'a2c'
 
-    round_loop(config=parserConfig(), rounds=rounds, epochs=epochs, bug_list=bug_version, model_type=model_type)
+    round_loop(config=parserConfig(), rounds=rounds, epochs=epochs, bug_list=bug_version, model_type=model_type, max_steps=max_steps)
 

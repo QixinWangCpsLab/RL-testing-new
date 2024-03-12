@@ -5,7 +5,7 @@ import random
 from stable_baselines3 import SAC
 
 
-def generate_states_actions(env, num_samples=10, min_distance=0.1):
+def generate_states_actions(env, num_samples=12, min_distance=0.1):
     state_action_dict = {}
     states_sampled = 0
 
@@ -25,12 +25,12 @@ def generate_states_actions(env, num_samples=10, min_distance=0.1):
             states_sampled += 1
 
     # 随机丢弃生成的script中的一些内容
-    keys = list(state_action_dict.keys())
-    random.shuffle(keys)  # 打乱键的顺序
-    keys_to_remove = keys[:len(keys) // 4]  # 准备取走四分之一的键
+    # keys = list(state_action_dict.keys())
+    # random.shuffle(keys)  # 打乱键的顺序
+    # keys_to_remove = keys[:len(keys) // 4]  # 准备取走四分之一的键
 
-    for key in keys_to_remove:
-        del state_action_dict[key]  # 从字典中移除选中的键
+    # for key in keys_to_remove:
+    #     del state_action_dict[key]  # 从字典中移除选中的键
 
     return state_action_dict
 
@@ -53,13 +53,25 @@ class EnvWrapper(gym.Env):
         distance = abs(current_state[0] - ideal_state[0])
         # 相似度是距离的递减函数
         # 使用指数递减
-        similarity = np.exp(-distance * 10)
+        # similarity = np.exp(-distance * 10)
+        similarity = 0
+        if distance < 0.5:
+            similarity = 1
+        else:
+            similarity = 0
         return similarity
 
     def action_similarity(self, action, ideal_action):
         # 定义动作相似度的计算
         # 简单地使用差的绝对值
-        similarity = max(1 - abs(action - ideal_action), 0)
+        # similarity = max(1 - abs(action - ideal_action), 0)
+        similarity = 0
+        if abs(action - ideal_action) < 0.3:
+            similarity = 1
+        elif abs(action - ideal_action) < 0.5:
+            similarity = 0.7
+        else:
+            similarity = 0
         return similarity
 
     def calculate_distance(self, current_state, ideal_state):
@@ -78,12 +90,12 @@ class EnvWrapper(gym.Env):
             action_sim = self.action_similarity(action, self.rewarded_actions[closest_state])
             # 使用状态相似度和动作相似度来计算奖励
             fuzzy_reward = state_sim * action_sim
-            if fuzzy_reward > 0.7:
-                reward = fuzzy_reward * 5
-            else:
-                reward = -0.5
-        else:
-            reward = -1
+            # if fuzzy_reward > 0.7:
+            reward = fuzzy_reward * 5
+        #     else:
+        #         reward = -0.5
+        # else:
+        #     reward = -1
 
         # # 其他奖励逻辑保持不变
         # elif obs[0] > 0.45:

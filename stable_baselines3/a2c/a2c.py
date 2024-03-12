@@ -171,7 +171,7 @@ class A2C(OnPolicyAlgorithm):
             loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss
 
             # Optimization step
-            #self.policy.optimizer.zero_grad()
+            self.policy.optimizer.zero_grad()
             loss.backward()
 
             # Clip grad norm
