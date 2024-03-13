@@ -258,7 +258,7 @@ bug_group = [
     {
         'relative_path': "/stable_baselines3/a2c/a2c.py",
         'lineno': -1,  # no use
-        'original_lines': ['entropy_loss = th.mean(-log_prob)', 'entropy_loss = -th.mean(entropy)'],
+        'original_lines': ['entropy_loss = -th.mean(-log_prob)', 'entropy_loss = -th.mean(entropy)'],
         'injected_lines': ['entropy_loss = th.mean(-log_prob)', 'entropy_loss = th.mean(entropy)'],
         'realife_bug': False,
         'description': "bug in A2C train. Wrong policy loss. Wrong entropy loss calculation"
@@ -281,6 +281,63 @@ bug_group = [
     }, # 32th bug
 
 
+    # 25th, 26th, 27th 28th bug also apply for ppo
+    {
+        'relative_path': "/stable_baselines3/ppo/ppo.py",
+        'lineno': -1,  # no use
+        'original_lines': ['clip_range = self.clip_range(self._current_progress_remaining)  # type: ignore[operator]'],
+        'injected_lines': ['#clip_range = self.clip_range(self._current_progress_remaining)  # type: ignore[operator]'],
+        'realife_bug': False,
+        'description': "Disable clip range change during training. This may cause error."
+    }, # 33th bug
+    {
+        'relative_path': "/stable_baselines3/ppo/ppo.py",
+        'lineno': -1,  # no use
+        'original_lines': ['th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
+        'injected_lines': ['#th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
+        'realife_bug': False,
+        'description': "Disable clip grad norm. This may lead to gradient explosion."
+    }, # 34th bug
+    {
+        'relative_path': "/stable_baselines3/ppo/ppo.py",
+        'lineno': -1,  # no use
+        'original_lines': ['self.policy.optimizer.zero_grad()'],
+        'injected_lines': ['#self.policy.optimizer.zero_grad()'],
+        'realife_bug': False,
+        'description': "bug in ppo train. Forget to run zero grad function"
+    }, # 35th bug
+    {
+        'relative_path': "/stable_baselines3/ppo/ppo.py",
+        'lineno': -1,  # no use
+        'original_lines': ['entropy_loss = -th.mean(-log_prob)', 'entropy_loss = -th.mean(entropy)'],
+        'injected_lines': ['entropy_loss = th.mean(-log_prob)', 'entropy_loss = th.mean(entropy)'],
+        'realife_bug': False,
+        'description': "bug in ppo train. Wrong policy loss. Wrong entropy loss calculation"
+    }, # 36th bug
+    {
+        'relative_path': "/stable_baselines3/ppo/ppo.py",
+        'lineno': -1,  # no use
+        'original_lines': ['self.policy.optimizer.zero_grad()'],
+        'injected_lines': ['#self.policy.optimizer.zero_grad()'],
+        'realife_bug': False,
+        'description': "bug in ppo train. Forget to run zero grad function"
+    }, # 37th bug
+    {
+        'relative_path': "/stable_baselines3/ppo/ppo.py",
+        'lineno': -1,  # no use
+        'original_lines': ['loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss'],
+        'injected_lines': ['loss = policy_loss + self.ent_coef * entropy_loss + value_loss'],
+        'realife_bug': False,
+        'description': "bug in ppo train. Wrong loss."
+    }, # 38th bug
+    {
+        'relative_path': "/stable_baselines3/ppo/ppo.py",
+        'lineno': -1,  # no use
+        'original_lines': ['policy_loss = -th.min(policy_loss_1, policy_loss_2).mean()'],
+        'injected_lines': ['policy_loss = advantages'],
+        'realife_bug': False,
+        'description': "bug in ppo train. No clip and no ratio."
+    }, # 39th bug
 
     
 ]
