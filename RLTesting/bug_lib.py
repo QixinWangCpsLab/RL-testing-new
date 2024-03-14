@@ -286,7 +286,7 @@ bug_group = [
         'relative_path': "/stable_baselines3/ppo/ppo.py",
         'lineno': -1,  # no use
         'original_lines': ['clip_range = self.clip_range(self._current_progress_remaining)  # type: ignore[operator]'],
-        'injected_lines': ['#clip_range = self.clip_range(self._current_progress_remaining)  # type: ignore[operator]'],
+        'injected_lines': ['clip_range = 0'],
         'realife_bug': False,
         'description': "Disable clip range change during training. This may cause error."
     }, # 33th bug
@@ -334,7 +334,7 @@ bug_group = [
         'relative_path': "/stable_baselines3/ppo/ppo.py",
         'lineno': -1,  # no use
         'original_lines': ['policy_loss = -th.min(policy_loss_1, policy_loss_2).mean()'],
-        'injected_lines': ['policy_loss = advantages'],
+        'injected_lines': ['policy_loss = -advantages.mean()'],
         'realife_bug': False,
         'description': "bug in ppo train. No clip and no ratio."
     }, # 39th bug
