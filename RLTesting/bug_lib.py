@@ -12,7 +12,7 @@ bug_group = [
         'original_lines': ['tau: float = 1.0,'],
         'injected_lines': ['tau: float = 2.0,  # should be within 0 and 1, buggy'],
         'realife_bug': False,
-        'description': "Anything about this bug"
+        'description': "tau (float) – the soft update coefficient. tau: float = 2.0,  # should be within 0 and 1, buggy"
     }, # 0th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -20,7 +20,7 @@ bug_group = [
         'original_lines': ['th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
         'injected_lines': ['# th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)  # buggy'],
         'realife_bug': False,
-        'description': "Anything about this bug"
+        'description': "Disable clip grad norm. This may lead to gradient explosion."
     }, # 1st bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -44,7 +44,7 @@ bug_group = [
         'original_lines': ['self.exploration_initial_eps,', 'self.exploration_final_eps, #'],
         'injected_lines': ['self.exploration_final_eps,', 'self.exploration_initial_eps,'],
         'realife_bug': False,
-        'description': "Anything about this bug"
+        'description': "Wrong exploration eps schedule"
     },  # 4th bug
     {
         'relative_path': "/stable_baselines3/sac/sac.py",
@@ -149,7 +149,7 @@ bug_group = [
         'original_lines': ['with th.no_grad():'],
         'injected_lines': ['if True:'],
         'realife_bug': False,
-        'description': ""
+        'description': "Without th.no_grad()"
     }, # 16th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -157,7 +157,7 @@ bug_group = [
         'original_lines': ['target_q_values = replay_data.rewards + (1 - replay_data.dones) * self.gamma * next_q_values'],
         'injected_lines': ['target_q_values = replay_data.rewards + replay_data.dones * self.gamma * next_q_values'],
         'realife_bug': False,
-        'description': ""
+        'description': "Wrong calculation on target q values"
     }, # 17th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -165,7 +165,7 @@ bug_group = [
         'original_lines': ['self.policy.optimizer.zero_grad()'],
         'injected_lines': [''],
         'realife_bug': False,
-        'description': ""
+        'description': "No zero grad"
     }, # 18th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -173,7 +173,7 @@ bug_group = [
         'original_lines': ['next_q_values = self.q_net_target(replay_data.next_observations)'],
         'injected_lines': ['next_q_values = self.q_net_target(replay_data.observations)'],
         'realife_bug': False,
-        'description': ""
+        'description': "Wrong next q values calculation"
     }, # 19th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -181,7 +181,7 @@ bug_group = [
         'original_lines': ['current_q_values = self.q_net(replay_data.observations)'],
         'injected_lines': ['current_q_values = self.q_net(replay_data.next_observations)'],
         'realife_bug': False,
-        'description': ""
+        'description': "Wrong current q values calculation"
     }, # 20th bug
     {
         'relative_path': "/stable_baselines3/dqn/policies.py",
@@ -189,7 +189,7 @@ bug_group = [
         'original_lines': ['net_arch = [64, 64]#bug 21'],
         'injected_lines': ['net_arch = [1, 1]#bug 21'],
         'realife_bug': False,
-        'description': ""
+        'description': "Wrong Network architecture"
     }, # 21th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -197,7 +197,7 @@ bug_group = [
         'original_lines': ['self.exploration_rate = self.exploration_schedule(self._current_progress_remaining)'],
         'injected_lines': ['#self.exploration_rate = self.exploration_schedule(self._current_progress_remaining)'],
         'realife_bug': False,
-        'description': ""
+        'description': "Fixed exploration rate"
     }, # 22th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -205,7 +205,7 @@ bug_group = [
         'original_lines': ['target_q_values = replay_data.rewards + (1 - replay_data.dones) * self.gamma * next_q_values'],
         'injected_lines': ['target_q_values = replay_data.rewards + (1 - replay_data.dones) * next_q_values'],
         'realife_bug': False,
-        'description': ""
+        'description': "Wrong target q calculation"
     }, # 23th bug
     {
         'relative_path': "/stable_baselines3/a2c/a2c.py",
