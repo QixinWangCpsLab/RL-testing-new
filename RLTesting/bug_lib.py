@@ -58,7 +58,7 @@ bug_group = [
         'relative_path': "/stable_baselines3/common/on_policy_algorithm.py",
         'lineno': -1,  # no use
         'original_lines': ['self._last_episode_starts,  # type: ignore[arg-type]', 'self._last_episode_starts = dones'],
-        'injected_lines': ['dones', '#delete this line'],
+        'injected_lines': ['dones,', '#delete this line'],
         'realife_bug': True,
         'description': "#105 on policy algorithm: rollout collect current 'dones' instead of last 'dones'."
     },  # 6th bug
