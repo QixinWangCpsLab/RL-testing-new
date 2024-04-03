@@ -27,11 +27,7 @@ During the training process, we will use Tensorboard to visualize and monitor va
 
 1. **Episode Reward**: This metric tracks the total reward obtained by the agent in each episode. An increasing trend in episode rewards indicates that the agent is learning to make better decisions over time.
 
-2. **Episode Length**: This metric represents the number of time steps taken by the agent in each episode. A decreasing trend in episode length suggests that the agent is finding more efficient paths to reach the goal.
-
-3. **Average Q-Value**: For algorithms like Q-learning, the average Q-value metric indicates the expected cumulative reward the agent estimates for each state-action pair. An increasing trend in average Q-values suggests that the agent is learning to assign higher values to favorable actions.
-
-4. **Loss**: Some RL algorithms, such as policy gradient methods, involve the optimization of a loss function. Monitoring the loss metric can help assess the convergence and stability of the learning process.
+2. **Loss**: Some RL algorithms, such as policy gradient methods, involve the optimization of a loss function. Monitoring the loss metric can help assess the convergence and stability of the learning process.
 
 ## Evaluation Process
 
