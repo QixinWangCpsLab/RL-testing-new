@@ -6,7 +6,7 @@ In this project, we aim to evaluate the behaviour of agent trained by Reinforcem
 ## Reinforcement Learning
 Reinforcement Learning is a subfield of machine learning where an agent learns to make decisions by interacting with an environment. The agent receives rewards or penalties based on its actions, and its goal is to learn a policy that maximizes the cumulative reward over time. RL algorithms, such as Q-learning and policy gradients, enable the agent to learn from its experiences and improve its decision-making abilities.
 
-![Reinforcement Learning Framework](./picts/Reinforcement_learning_diagram.svg.png)
+![Reinforcement Learning Framework](./picts/WX20240403-164922@2x.png)
 
 
 ## Environments
@@ -14,7 +14,7 @@ Reinforcement Learning is a subfield of machine learning where an agent learns t
 ### Frozen Lake
 Frozen Lake is a grid-world environment provided by OpenAI Gym. The agent's objective is to navigate from the starting position to the goal position on a 4x4 grid of ice and holes. The agent can move in four directions: up, down, left, and right. If the agent falls into a hole, the episode ends, and the agent receives a negative reward. If the agent reaches the goal, it receives a positive reward. The challenge is to learn a policy that maximizes the chances of reaching the goal while avoiding the holes.
 
-![Frozen Lake GIF](./picts/WX20240403-164922@2x.png)
+![Frozen Lake GIF](./picts/frozen_lake.gif)
 
 ### Mountain Car
 Mountain Car is another classic environment in OpenAI Gym. The agent controls a car stuck in a valley between two mountains. The goal is to drive the car to the top of the right mountain. However, the car's engine is not strong enough to scale the mountain in a single pass. Therefore, the agent needs to learn to build momentum by moving back and forth between the mountains to eventually reach the goal. The agent receives a negative reward for each time step until it reaches the goal.
