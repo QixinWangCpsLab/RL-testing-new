@@ -12,7 +12,8 @@ bug_group = [
         'original_lines': ['tau: float = 1.0,'],
         'injected_lines': ['tau: float = 2.0,  # should be within 0 and 1, buggy'],
         'realife_bug': False,
-        'description': "tau (float) – the soft update coefficient. tau: float = 2.0,  # should be within 0 and 1, buggy"
+        'description': "tau (float) – the soft update coefficient. tau: float = 2.0,  # should be within 0 and 1, buggy",
+        'category': "Wrong network update",
     }, # 0th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -20,7 +21,8 @@ bug_group = [
         'original_lines': ['th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
         'injected_lines': ['# th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)  # buggy'],
         'realife_bug': False,
-        'description': "Disable clip grad norm. This may lead to gradient explosion."
+        'description': "Disable clip grad norm. This may lead to gradient explosion.",
+        'category': "Wrong calculation of gradients",
     }, # 1st bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -28,7 +30,8 @@ bug_group = [
         'original_lines': ['polyak_update(self.batch_norm_stats, self.batch_norm_stats_target, 1.0)'],
         'injected_lines': ['polyak_update(self.batch_norm_stats, self.batch_norm_stats_target, self.tau)  # 错误的方法'],
         'realife_bug': False,
-        'description': "Anything about this bug"
+        'description': "Anything about this bug",
+        'category': '?',
     },  # 2nd bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -36,7 +39,8 @@ bug_group = [
         'original_lines': ['if self._n_calls % max(self.target_update_interval // self.n_envs, 1) == 0:'],
         'injected_lines': ['if self._n_calls % max(0 // self.n_envs, 1) == 0:'],
         'realife_bug': False,
-        'description': "Anything about this bug"
+        'description': "Anything about this bug",
+        'category': "?",
     },  # 3rd bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -44,7 +48,8 @@ bug_group = [
         'original_lines': ['self.exploration_initial_eps,', 'self.exploration_final_eps, #'],
         'injected_lines': ['self.exploration_final_eps,', 'self.exploration_initial_eps,'],
         'realife_bug': False,
-        'description': "Wrong exploration eps schedule"
+        'description': "Wrong exploration eps schedule",
+        'category': "Exploring the environment",
     },  # 4th bug
     {
         'relative_path': "/stable_baselines3/sac/sac.py",
@@ -52,7 +57,8 @@ bug_group = [
         'original_lines': ['next_q_values = next_q_values - ent_coef * next_log_prob.reshape(-1, 1)', 'target_q_values = replay_data.rewards + (1 - replay_data.dones) * self.gamma * next_q_values'],
         'injected_lines': ['next_q_values = replay_data.rewards + (1 - replay_data.dones) * self.gamma * next_q_values', 'target_q_values = next_q_values - ent_coef * next_log_prob.reshape(-1, 1)'],
         'realife_bug': True,
-        'description': "#76 SAC: Wrong target q-value in SAC."
+        'description': "#76 SAC: Wrong target q-value in SAC.",
+        'category': 'Training',
     },  # 5th bug
     {
         'relative_path': "/stable_baselines3/common/on_policy_algorithm.py",
@@ -60,7 +66,8 @@ bug_group = [
         'original_lines': ['self._last_episode_starts,  # type: ignore[arg-type]', 'self._last_episode_starts = dones'],
         'injected_lines': ['dones,', '#delete this line'],
         'realife_bug': True,
-        'description': "#105 on policy algorithm: rollout collect current 'dones' instead of last 'dones'."
+        'description': "#105 on policy algorithm: rollout collect current 'dones' instead of last 'dones'.",
+        'category': "Training",
     },  # 6th bug
     {
         'relative_path': "/stable_baselines3/ppo/ppo.py",
@@ -68,7 +75,8 @@ bug_group = [
         'original_lines': ['entropy_loss = -th.mean(-log_prob)'],
         'injected_lines': ['entropy_loss = -log_prob.mean()'],
         'realife_bug': True,
-        'description': "#130 PPO: wrong entropy loss computation in PPO."
+        'description': "#130 PPO: wrong entropy loss computation in PPO.",
+        'category': "Loss function",
     },  # 7th bug
     {
         'relative_path': "/stable_baselines3/a2c/a2c.py",
@@ -76,7 +84,8 @@ bug_group = [
         'original_lines': ['entropy_loss = -th.mean(-log_prob)'],
         'injected_lines': ['entropy_loss = -log_prob.mean()'],
         'realife_bug': True,
-        'description': "#130 A2C: wrong entropy loss computation in A2C."
+        'description': "#130 A2C: wrong entropy loss computation in A2C.",
+        'category': "Loss function",
     },  # 8th bug
     {
         'relative_path': "/stable_baselines3/dqn/policies.py",
@@ -89,7 +98,8 @@ bug_group = [
                            '',
                            'return QNetwork(**self.net_args).to(self.device)'],
         'realife_bug': True,
-        'description': "#132 DQN： main and target network accidentally shared feature extractor network."
+        'description': "#132 DQN： main and target network accidentally shared feature extractor network.",
+        'category': "model",
     },  # 9th bug
     {
         'relative_path': "/stable_baselines3/common/on_policy_algorithm.py",
@@ -97,7 +107,8 @@ bug_group = [
         'original_lines': ['with th.no_grad(): #10th bug: 1', '# Compute value for the last timestep', 'values = self.policy.predict_values(obs_as_tensor(new_obs, self.device))  # type: ignore[arg-type]'],
         'injected_lines': ['', '', ''],
         'realife_bug': True,
-        'description': "#183 On Policy algorithm： wrpmh advantages estimation for on policy algorithm."
+        'description': "#183 On Policy algorithm： wrpmh advantages estimation for on policy algorithm.",
+        'category': 'Training',
     },  # 10th bug
 
 
@@ -107,7 +118,8 @@ bug_group = [
         'original_lines': ['th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
         'injected_lines': ['th.nn.utils.clip_grad_norm_(self.policy.parameters(), 1e8)'],
         'realife_bug': False,
-        'description': "Gradient cropping is designed to prevent the problem of gradient explosion; if the cropping threshold is set very high, cropping does not actually occur and may lead to unstable training."
+        'description': "Gradient cropping is designed to prevent the problem of gradient explosion; if the cropping threshold is set very high, cropping does not actually occur and may lead to unstable training.",
+        'category': "Wrong calculation of gradients",
     },  # 11th bug
     {
         'relative_path': "/stable_baselines3/a2c/a2c.py",
@@ -116,7 +128,9 @@ bug_group = [
         'injected_lines': ['self.policy_kwargs["optimizer_kwargs"] = dict(alpha=0.1, eps=rms_prop_eps, weight_decay=0)'],
         'realife_bug': False,
         'description': "The alpha parameter of RMSprop controls the decay rate of the moving average. If it is set too low, the moving average will quickly forget old gradient information, causing the optimization to become very oscillatory; \
-                        if it is set too high, the optimizer will rely too much on old gradient information, which may lead to too slow training."
+                        if it is set too high, the optimizer will rely too much on old gradient information, which may lead to too slow training.",
+        'category': '?',
+
     },  # 12th bug
     {
         'relative_path': "/stable_baselines3/a2c/a2c.py",
@@ -124,7 +138,8 @@ bug_group = [
         'original_lines': ['self.policy_kwargs["optimizer_kwargs"] = dict(alpha=0.99, eps=rms_prop_eps, weight_decay=0)'],
         'injected_lines': ['self.policy_kwargs["optimizer_kwargs"] = dict(alpha=0.9999, eps=rms_prop_eps, weight_decay=0)'],
         'realife_bug': False,
-        'description': "Same as 12 th bug"
+        'description': "Same as 12 th bug",
+        'category': '?',
     }, # 13th bug
     {
         'relative_path': "/stable_baselines3/a2c/a2c.py",
@@ -133,7 +148,8 @@ bug_group = [
         'injected_lines': ['advantages = (advantages - advantages.mean())'],
         'realife_bug': False,
         'description': "This error causes the dominance function to not be normalized correctly, which can lead to less efficient training, \
-            since normalization helps to speed up learning and improve the performance of the strategy"
+            since normalization helps to speed up learning and improve the performance of the strategy",
+        'category': 'Training',
     }, # 14th bug
         {
         'relative_path': "/stable_baselines3/ppo/ppo.py",
@@ -141,7 +157,8 @@ bug_group = [
         'original_lines': ['self.clip_range = get_schedule_fn(self.clip_range)'],
         'injected_lines': ['self.clip_range = get_schedule_fn(self.learning_rate)'],
         'realife_bug': False,
-        'description': "Wrong mistake on purpose without any meaning or explaination"
+        'description': "Wrong mistake on purpose without any meaning or explaination",
+        'category': "model?",
     }, # 15th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -149,7 +166,8 @@ bug_group = [
         'original_lines': ['with th.no_grad():'],
         'injected_lines': ['if True:'],
         'realife_bug': False,
-        'description': "Without th.no_grad()"
+        'description': "Without th.no_grad()",
+        'category': 'Wrong network update',
     }, # 16th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -157,7 +175,8 @@ bug_group = [
         'original_lines': ['target_q_values = replay_data.rewards + (1 - replay_data.dones) * self.gamma * next_q_values'],
         'injected_lines': ['target_q_values = replay_data.rewards + replay_data.dones * self.gamma * next_q_values'],
         'realife_bug': False,
-        'description': "Wrong calculation on target q values"
+        'description': "Wrong calculation on target q values",
+        'category': "Training",
     }, # 17th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -165,7 +184,8 @@ bug_group = [
         'original_lines': ['self.policy.optimizer.zero_grad()'],
         'injected_lines': [''],
         'realife_bug': False,
-        'description': "No zero grad"
+        'description': "No zero grad",
+        'category': "Optimizer",
     }, # 18th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -173,7 +193,8 @@ bug_group = [
         'original_lines': ['next_q_values = self.q_net_target(replay_data.next_observations)'],
         'injected_lines': ['next_q_values = self.q_net_target(replay_data.observations)'],
         'realife_bug': False,
-        'description': "Wrong next q values calculation"
+        'description': "Wrong next q values calculation",
+        'category': "Training",
     }, # 19th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -181,7 +202,8 @@ bug_group = [
         'original_lines': ['current_q_values = self.q_net(replay_data.observations)'],
         'injected_lines': ['current_q_values = self.q_net(replay_data.next_observations)'],
         'realife_bug': False,
-        'description': "Wrong current q values calculation"
+        'description': "Wrong current q values calculation",
+        'category': "Training",
     }, # 20th bug
     {
         'relative_path': "/stable_baselines3/dqn/policies.py",
@@ -189,7 +211,8 @@ bug_group = [
         'original_lines': ['net_arch = [64, 64]#bug 21'],
         'injected_lines': ['net_arch = [1, 1]#bug 21'],
         'realife_bug': False,
-        'description': "Wrong Network architecture"
+        'description': "Wrong Network architecture",
+        'category': "Model",
     }, # 21th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -197,7 +220,8 @@ bug_group = [
         'original_lines': ['self.exploration_rate = self.exploration_schedule(self._current_progress_remaining)'],
         'injected_lines': ['#self.exploration_rate = self.exploration_schedule(self._current_progress_remaining)'],
         'realife_bug': False,
-        'description': "Fixed exploration rate"
+        'description': "Fixed exploration rate",
+        'category': "Exploriong the enviroment",
     }, # 22th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -205,7 +229,8 @@ bug_group = [
         'original_lines': ['target_q_values = replay_data.rewards + (1 - replay_data.dones) * self.gamma * next_q_values'],
         'injected_lines': ['target_q_values = replay_data.rewards + (1 - replay_data.dones) * next_q_values'],
         'realife_bug': False,
-        'description': "Wrong target q calculation"
+        'description': "Wrong target q calculation",
+        'category': "Training",
     }, # 23th bug
     {
         'relative_path': "/stable_baselines3/a2c/a2c.py",
@@ -213,7 +238,8 @@ bug_group = [
         'original_lines': ['th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
         'injected_lines': ['#th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
         'realife_bug': False,
-        'description': "Disable clip grad norm. This may lead to gradient explosion."
+        'description': "Disable clip grad norm. This may lead to gradient explosion.",
+        'category': "Wrong calculation of gradients",
     }, # 24th bug
     {
         'relative_path': "/stable_baselines3/common/buffers.py",
@@ -221,7 +247,8 @@ bug_group = [
         'original_lines': ['next_values = self.values[step + 1]'],
         'injected_lines': ['next_values = self.values[step]'],
         'realife_bug': False,
-        'description': "bug in actor critic advantage calculation. This bug will influence all algorithms using advantage, such as a2c, ppo"
+        'description': "bug in actor critic advantage calculation. This bug will influence all algorithms using advantage, such as a2c, ppo",
+        'category': "Training",
     }, # 25th bug
     {
         'relative_path': "/stable_baselines3/common/buffers.py",
@@ -229,7 +256,8 @@ bug_group = [
         'original_lines': ['delta = self.rewards[step] + self.gamma * next_values * next_non_terminal - self.values[step]'],
         'injected_lines': ['delta = self.rewards[step] + next_values * next_non_terminal - self.values[step]'],
         'realife_bug': False,
-        'description': "bug in actor critic advantage calculation. This bug will influence all algorithms using advantage, such as a2c, ppo"
+        'description': "bug in actor critic advantage calculation. This bug will influence all algorithms using advantage, such as a2c, ppo",
+        'category': "Training",
     }, # 26th bug
     {
         'relative_path': "/stable_baselines3/common/buffers.py",
@@ -237,7 +265,8 @@ bug_group = [
         'original_lines': ['for step in reversed(range(self.buffer_size)):'],
         'injected_lines': ['for step in range(self.buffer_size):'],
         'realife_bug': False,
-        'description': "bug in actor critic advantage calculation. This bug will influence all algorithms using advantage, such as a2c, ppo. Not sure whether this will cause a error or not."
+        'description': "bug in actor critic advantage calculation. This bug will influence all algorithms using advantage, such as a2c, ppo. Not sure whether this will cause a error or not.",
+        'category': "Training",
     }, # 27th bug
     {
         'relative_path': "/stable_baselines3/common/policies.py",
@@ -245,7 +274,8 @@ bug_group = [
         'original_lines': ['net_arch = dict(pi=[64, 64], vf=[64, 64])'],
         'injected_lines': ['net_arch = dict(pi=[1, 1], vf=[1, 1])'],
         'realife_bug': False,
-        'description': "bug in A2C policy."
+        'description': "bug in A2C policy.",
+        'category': "Model",
     }, # 28th bug
     {
         'relative_path': "/stable_baselines3/a2c/a2c.py",
@@ -253,7 +283,8 @@ bug_group = [
         'original_lines': ['policy_loss = -(advantages * log_prob).mean()'],
         'injected_lines': ['policy_loss = (advantages * log_prob).mean()'],
         'realife_bug': False,
-        'description': "bug in A2C train. Wrong policy loss."
+        'description': "bug in A2C train. Wrong policy loss.",
+        'category': 'Loss function',
     }, # 29th bug
     {
         'relative_path': "/stable_baselines3/a2c/a2c.py",
@@ -261,7 +292,8 @@ bug_group = [
         'original_lines': ['entropy_loss = -th.mean(-log_prob)', 'entropy_loss = -th.mean(entropy)'],
         'injected_lines': ['entropy_loss = th.mean(-log_prob)', 'entropy_loss = th.mean(entropy)'],
         'realife_bug': False,
-        'description': "bug in A2C train. Wrong policy loss. Wrong entropy loss calculation"
+        'description': "bug in A2C train. Wrong policy loss. Wrong entropy loss calculation",
+        'category': "Loss funtction",
     }, # 30th bug
     {
         'relative_path': "/stable_baselines3/a2c/a2c.py",
@@ -269,7 +301,8 @@ bug_group = [
         'original_lines': ['loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss'],
         'injected_lines': ['loss = policy_loss + self.ent_coef * entropy_loss + value_loss'],
         'realife_bug': False,
-        'description': "bug in A2C train. Wrong loss."
+        'description': "bug in A2C train. Wrong loss.",
+        'category': "Loss function",
     }, # 31th bug
     {
         'relative_path': "/stable_baselines3/a2c/a2c.py",
@@ -277,7 +310,8 @@ bug_group = [
         'original_lines': ['self.policy.optimizer.zero_grad()'],
         'injected_lines': ['#self.policy.optimizer.zero_grad()'],
         'realife_bug': False,
-        'description': "bug in A2C train. Forget to run zero grad function"
+        'description': "bug in A2C train. Forget to run zero grad function",
+        'category': "Optimizer",
     }, # 32th bug
 
 
@@ -288,7 +322,8 @@ bug_group = [
         'original_lines': ['clip_range = self.clip_range(self._current_progress_remaining)  # type: ignore[operator]'],
         'injected_lines': ['clip_range = 0'],
         'realife_bug': False,
-        'description': "Disable clip range change during training. This may cause error."
+        'description': "Disable clip range change during training. This may cause error.",
+        'category': "Training",
     }, # 33th bug
     {
         'relative_path': "/stable_baselines3/ppo/ppo.py",
@@ -296,7 +331,8 @@ bug_group = [
         'original_lines': ['th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
         'injected_lines': ['#th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
         'realife_bug': False,
-        'description': "Disable clip grad norm. This may lead to gradient explosion."
+        'description': "Disable clip grad norm. This may lead to gradient explosion.",
+        'category': "Wrong calculation of gradients",
     }, # 34th bug
     {
         'relative_path': "/stable_baselines3/ppo/ppo.py",
@@ -304,7 +340,8 @@ bug_group = [
         'original_lines': ['self.policy.optimizer.zero_grad()'],
         'injected_lines': ['#self.policy.optimizer.zero_grad()'],
         'realife_bug': False,
-        'description': "bug in ppo train. Forget to run zero grad function"
+        'description': "Redundant",
+        'category': "optimizer",
     }, # 35th bug
     {
         'relative_path': "/stable_baselines3/ppo/ppo.py",
@@ -312,7 +349,8 @@ bug_group = [
         'original_lines': ['entropy_loss = -th.mean(-log_prob)', 'entropy_loss = -th.mean(entropy)'],
         'injected_lines': ['entropy_loss = th.mean(-log_prob)', 'entropy_loss = th.mean(entropy)'],
         'realife_bug': False,
-        'description': "bug in ppo train. Wrong policy loss. Wrong entropy loss calculation"
+        'description': "bug in ppo train. Wrong policy loss. Wrong entropy loss calculation",
+        'category' : "Loss function",
     }, # 36th bug
     {
         'relative_path': "/stable_baselines3/ppo/ppo.py",
@@ -320,7 +358,8 @@ bug_group = [
         'original_lines': ['self.policy.optimizer.zero_grad()'],
         'injected_lines': ['#self.policy.optimizer.zero_grad()'],
         'realife_bug': False,
-        'description': "bug in ppo train. Forget to run zero grad function"
+        'description': "bug in ppo train. Forget to run zero grad function",
+        'category': "optimizer",
     }, # 37th bug
     {
         'relative_path': "/stable_baselines3/ppo/ppo.py",
@@ -328,7 +367,8 @@ bug_group = [
         'original_lines': ['loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss'],
         'injected_lines': ['loss = policy_loss + self.ent_coef * entropy_loss + value_loss'],
         'realife_bug': False,
-        'description': "bug in ppo train. Wrong loss."
+        'description': "bug in ppo train. Wrong loss.",
+        'category': "Loss function",
     }, # 38th bug
     {
         'relative_path': "/stable_baselines3/ppo/ppo.py",
@@ -336,7 +376,8 @@ bug_group = [
         'original_lines': ['policy_loss = -th.min(policy_loss_1, policy_loss_2).mean()'],
         'injected_lines': ['policy_loss = -advantages.mean()'],
         'realife_bug': False,
-        'description': "bug in ppo train. No clip and no ratio."
+        'description': "bug in ppo train. No clip and no ratio.",
+        'category': "Loss function",
     }, # 39th bug
 
     
