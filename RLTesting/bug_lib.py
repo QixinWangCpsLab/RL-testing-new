@@ -13,7 +13,7 @@ bug_group = [
         'injected_lines': ['tau: float = 2.0,  # should be within 0 and 1, buggy'],
         'realife_bug': False,
         'description': "tau (float) – the soft update coefficient. tau: float = 2.0,  # should be within 0 and 1, buggy",
-        'category': "Wrong network update",
+        'category': "Updating network",
     }, # 0th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -22,7 +22,7 @@ bug_group = [
         'injected_lines': ['# th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)  # buggy'],
         'realife_bug': False,
         'description': "Disable clip grad norm. This may lead to gradient explosion.",
-        'category': "Wrong calculation of gradients",
+        'category': "Updating network",
     }, # 1st bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -119,7 +119,7 @@ bug_group = [
         'injected_lines': ['th.nn.utils.clip_grad_norm_(self.policy.parameters(), 1e8)'],
         'realife_bug': False,
         'description': "Gradient cropping is designed to prevent the problem of gradient explosion; if the cropping threshold is set very high, cropping does not actually occur and may lead to unstable training.",
-        'category': "Wrong calculation of gradients",
+        'category': "Updating network",
     },  # 11th bug
     {
         'relative_path': "/stable_baselines3/a2c/a2c.py",
@@ -221,7 +221,7 @@ bug_group = [
         'injected_lines': ['#self.exploration_rate = self.exploration_schedule(self._current_progress_remaining)'],
         'realife_bug': False,
         'description': "Fixed exploration rate",
-        'category': "Exploriong the enviroment",
+        'category': "Exploring the enviroment",
     }, # 22th bug
     {
         'relative_path': "/stable_baselines3/dqn/dqn.py",
@@ -239,7 +239,7 @@ bug_group = [
         'injected_lines': ['#th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
         'realife_bug': False,
         'description': "Disable clip grad norm. This may lead to gradient explosion.",
-        'category': "Wrong calculation of gradients",
+        'category': "Updating network",
     }, # 24th bug
     {
         'relative_path': "/stable_baselines3/common/buffers.py",
@@ -332,7 +332,7 @@ bug_group = [
         'injected_lines': ['#th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)'],
         'realife_bug': False,
         'description': "Disable clip grad norm. This may lead to gradient explosion.",
-        'category': "Wrong calculation of gradients",
+        'category': "Updating network",
     }, # 34th bug
     {
         'relative_path': "/stable_baselines3/ppo/ppo.py",
