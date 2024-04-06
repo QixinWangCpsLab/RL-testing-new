@@ -1,0 +1,63 @@
+Oracle Result,,,,,,,
+Testbed,Algorithm,Bug No.,Bug File,Bug category,Real life bug?,Fuzzy Oracle Pass Rate,Human Oracle Pass Rate
+Frozen Lake,A2C,24,/stable_baselines3/a2c/a2c.py,Updating network,NO,1,1
+Frozen Lake,A2C,25,/stable_baselines3/common/buffers.py,Training,NO,0.9,0.6
+Frozen Lake,A2C,26,/stable_baselines3/common/buffers.py,Training,NO,1,0
+Frozen Lake,A2C,27,/stable_baselines4/common/buffers.py,Training,NO,1,0
+Frozen Lake,A2C,28,/stable_baselines3/common/policies.py,Model,NO,1,0.8
+Frozen Lake,A2C,29,/stable_baselines3/a2c/a2c.py,Training Loss function,NO,0,0
+Frozen Lake,A2C,30,/stable_baselines3/a2c/a2c.py,Training Loss function,NO,1,1
+Frozen Lake,A2C,31,/stable_baselines3/a2c/a2c.py,Training Loss function,NO,0.9,1
+Frozen Lake,A2C,32,/stable_baselines3/a2c/a2c.py,Training Optimizer,NO,0.9,0
+Frozen Lake,DQN,0,/stable_baselines3/dqn/dqn.py,Updating network,NO,0,0
+Frozen Lake,DQN,1,/stable_baselines3/dqn/dqn.py,Updating network,NO,0.5,0.6
+Frozen Lake,DQN,2,/stable_baselines3/dqn/dqn.py,Updating network,NO,0.8,0.4
+Frozen Lake,DQN,4,/stable_baselines3/dqn/dqn.py,Exploring the enviroment,NO,0.7,0
+Frozen Lake,DQN,6,/stable_baselines3/common/on_policy_algorithm.py,Training,YES,0.9,0
+Frozen Lake,DQN,9,/stable_baselines3/dqn/policies.py,Model,YES,1,0.2
+Frozen Lake,DQN,10,/stable_baselines3/common/on_policy_algorithm.py,Training,YES,0.6,0.8
+Frozen Lake,DQN,16,/stable_baselines3/dqn/dqn.py,Updating network,NO,0.9,0
+Frozen Lake,DQN,17,/stable_baselines3/dqn/dqn.py,Training,NO,1,0
+Frozen Lake,DQN,18,/stable_baselines3/dqn/dqn.py,Training Optimizer,NO,0.6,0
+Frozen Lake,DQN,19,/stable_baselines3/dqn/dqn.py,Training,NO,1,0.2
+Frozen Lake,DQN,20,/stable_baselines3/dqn/dqn.py,Training,NO,0.4,0
+Frozen Lake,DQN,21,/stable_baselines3/dqn/policies.py,Model,NO,0.6,0.2
+Frozen Lake,DQN,22,/stable_baselines3/dqn/dqn.py,Exploring the enviroment,NO,0.4,0.2
+Frozen Lake,DQN,23,/stable_baselines3/dqn/dqn.py,Training,NO,0.5,0
+Frozen Lake,PPO,7,/stable_baselines3/ppo/ppo.py,Training Loss function,YES,1,1
+Frozen Lake,PPO,25,/stable_baselines3/common/buffers.py,Training,NO,1,0
+Frozen Lake,PPO,26,/stable_baselines3/common/buffers.py,Training,NO,1,0.4
+Frozen Lake,PPO,27,/stable_baselines3/common/buffers.py,Training,NO,0.9,0
+Frozen Lake,PPO,28,/stable_baselines3/common/policies.py,Model,NO,0.9,0
+Frozen Lake,PPO,33,/stable_baselines3/ppo/ppo.py,Training,NO,1,0
+Frozen Lake,PPO,34,/stable_baselines3/ppo/ppo.py,Updating network,NO,1,1
+Frozen Lake,PPO,35,/stable_baselines3/ppo/ppo.py,Training Optimizer,NO,0.9,0.8
+Frozen Lake,PPO,36,/stable_baselines3/ppo/ppo.py,Training Loss function,NO,0.9,1
+Frozen Lake,PPO,37,/stable_baselines3/ppo/ppo.py,Training Optimizer,NO,0.9,1
+Frozen Lake,PPO,38,/stable_baselines3/ppo/ppo.py,Training Loss function,NO,0.9,1
+Frozen Lake,PPO,39,/stable_baselines3/ppo/ppo.py,Training Loss function,NO,0.5,0
+Mountaincar Continuous ,A2C,24,/stable_baselines3/a2c/a2c.py,Updating network,NO,0.5,0.2
+Mountaincar Continuous ,A2C,25,/stable_baselines3/common/buffers.py,Training,NO,0.8,0.4
+Mountaincar Continuous ,A2C,26,/stable_baselines3/common/buffers.py,Training,NO,0.1,0.4
+Mountaincar Continuous ,A2C,27,/stable_baselines3/common/buffers.py,Training,NO,0.4,0.4
+Mountaincar Continuous ,A2C,28,/stable_baselines3/common/policies.py,Model,NO,0.6,0.6
+Mountaincar Continuous ,A2C,29,/stable_baselines3/a2c/a2c.py,Training Loss function,NO,0.5,0.2
+Mountaincar Continuous ,A2C,30,/stable_baselines3/a2c/a2c.py,Training Loss function,NO,0.3,0.6
+Mountaincar Continuous ,A2C,31,/stable_baselines3/a2c/a2c.py,Training Loss function,NO,0.4,0.2
+Mountaincar Continuous ,A2C,32,/stable_baselines3/a2c/a2c.py,Training Optimizer,NO,0.4,0.2
+Mountaincar Continuous ,PPO,25,/stable_baselines3/common/buffers.py,Training,NO,0.9,1
+Mountaincar Continuous ,PPO,26,/stable_baselines3/common/buffers.py,Training,NO,0.8,1
+Mountaincar Continuous ,PPO,27,/stable_baselines3/common/buffers.py,Training,NO,0.2,0
+Mountaincar Continuous ,PPO,28,/stable_baselines3/common/policies.py,Model,NO,1,1
+Mountaincar Continuous ,PPO,33,/stable_baselines3/ppo/ppo.py,Training,NO,0.7,0
+Mountaincar Continuous ,PPO,34,/stable_baselines3/ppo/ppo.py,Updating network,NO,0.8,1
+Mountaincar Continuous ,PPO,35,/stable_baselines3/ppo/ppo.py,Training Optimizer,NO,0.9,1
+Mountaincar Continuous ,PPO,36,/stable_baselines3/ppo/ppo.py,Training Loss function,NO,0.7,1
+Mountaincar Continuous ,PPO,37,/stable_baselines3/ppo/ppo.py,Training Optimizer,NO,0.8,1
+Mountaincar Continuous ,PPO,38,/stable_baselines3/ppo/ppo.py,Training Loss function,NO,0.8,0.4
+Mountaincar Continuous ,PPO,39,/stable_baselines3/ppo/ppo.py,Training Loss function,NO,0.4,0
+Frozen Lake,A2C,bug-free,,,,0.8,1
+Frozen Lake,DQN,bug-free,,,,0.6,0.2
+Frozen Lake,PPO,bug-free,,,,0.9,1
+Mountaincar Continuous ,A2C,bug-free,,,,0.7,0.8
+Mountaincar Continuous ,PPO,bug-free,,,,0.9,1
