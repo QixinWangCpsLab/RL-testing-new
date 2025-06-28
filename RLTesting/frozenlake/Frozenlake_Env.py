@@ -94,6 +94,7 @@ class EnvWrapper(gym.Env):
     def action_similarity(self, action, ideal_action):
         # 定义动作相似度的计算
         # 简单地使用差的绝对值
+        # similarity = 1 if action == ideal_action else 0
         similarity = max(1 - abs(action - ideal_action), 0)
         return similarity
 
