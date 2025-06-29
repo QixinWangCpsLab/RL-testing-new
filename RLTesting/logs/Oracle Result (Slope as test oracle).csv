@@ -39,16 +39,16 @@ Frozen Lake,PPO,39,/stable_baselines3/ppo/ppo.py,Tensor and inputs bugs,NO,0.5,0
 Mountaincar Continuous,A2C,24,/stable_baselines3/a2c/a2c.py,Updating network bugs,NO,0.5,0.2
 Mountaincar Continuous,A2C,25,/stable_baselines3/common/buffers.py,Training bugs,NO,0.8,0.6
 Mountaincar Continuous,A2C,26,/stable_baselines3/common/buffers.py,Training bugs,NO,0.1,0.6
-Mountaincar Continuous,A2C,27,/stable_baselines3/common/buffers.py,Training bugs,NO,0.4,0.6
-Mountaincar Continuous,A2C,28,/stable_baselines3/common/policies.py,Model bugs,NO,0.6,0.6
-Mountaincar Continuous,A2C,29,/stable_baselines3/a2c/a2c.py,Tensor and inputs bugs,NO,0.5,0.2
-Mountaincar Continuous,A2C,30,/stable_baselines3/a2c/a2c.py,Tensor and inputs bugs,NO,0.3,0.6
+Mountaincar Continuous,A2C,27,/stable_baselines3/common/buffers.py,Training bugs,NO,0.5,0.6
+Mountaincar Continuous,A2C,28,/stable_baselines3/common/policies.py,Model bugs,NO,0.7,0.6
+Mountaincar Continuous,A2C,29,/stable_baselines3/a2c/a2c.py,Tensor and inputs bugs,NO,0.4,0.2
+Mountaincar Continuous,A2C,30,/stable_baselines3/a2c/a2c.py,Tensor and inputs bugs,NO,0.4,0.6
 Mountaincar Continuous,A2C,31,/stable_baselines3/a2c/a2c.py,Tensor and inputs bugs,NO,0.4,0.2
 Mountaincar Continuous,A2C,32,/stable_baselines3/a2c/a2c.py,Model bugs,NO,0.4,0.2
-Mountaincar Continuous,PPO,25,/stable_baselines3/common/buffers.py,Training bugs,NO,0.9,1
+Mountaincar Continuous,PPO,25,/stable_baselines3/common/buffers.py,Training bugs,NO,1,1
 Mountaincar Continuous,PPO,26,/stable_baselines3/common/buffers.py,Training bugs,NO,0.8,1
 Mountaincar Continuous,PPO,27,/stable_baselines3/common/buffers.py,Training bugs,NO,0.5,0
-Mountaincar Continuous,PPO,28,/stable_baselines3/common/policies.py,Model bugs,NO,0.9,1
+Mountaincar Continuous,PPO,28,/stable_baselines3/common/policies.py,Model bugs,NO,1,1
 Mountaincar Continuous,PPO,33,/stable_baselines3/ppo/ppo.py,Training bugs,NO,1,0
 Mountaincar Continuous,PPO,34,/stable_baselines3/ppo/ppo.py,Updating network bugs,NO,0.8,1
 Mountaincar Continuous,PPO,35,/stable_baselines3/ppo/ppo.py,Updating network bugs,NO,1,1
@@ -59,5 +59,5 @@ Mountaincar Continuous,PPO,39,/stable_baselines3/ppo/ppo.py,Tensor and inputs bu
 Frozen Lake,A2C,bug-free,,,,0.9,1
 Frozen Lake,DQN,bug-free,,,,0.7,0.2
 Frozen Lake,PPO,bug-free,,,,0.9,1
-Mountaincar Continuous,A2C,bug-free,,,,0.7,0.8
+Mountaincar Continuous,A2C,bug-free,,,,0.8,0.8
 Mountaincar Continuous,PPO,bug-free,,,,0.9,1
